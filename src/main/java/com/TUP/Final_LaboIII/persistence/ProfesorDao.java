@@ -8,5 +8,7 @@ public interface ProfesorDao {
 
     Profesor loadProfesor(Long dni);
 
+    boolean findByDni(Long dni);
+
     Profesor deleteProfesor(Long dni);
 }

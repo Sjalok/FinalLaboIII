@@ -23,12 +23,7 @@ public class AlumnoServiceImpl implements AlumnoService {
     }
 
     @Override
-    public Alumno findById(int idalumno) {
-        return null;
-    }
-
-    @Override
-    public Alumno saveAlumno(Alumno alumnoacopiar, Alumno alumno) {
+    public Alumno saveAlumno(int id, Alumno alumno) {
         return null;
     }
 

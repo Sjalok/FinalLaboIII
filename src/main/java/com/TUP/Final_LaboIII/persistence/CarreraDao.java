@@ -9,7 +9,7 @@ public interface CarreraDao {
 
     Carrera loadCarrera(int codigocarrera);
 
-    Carrera findByCode(int codigocarrera);
+    boolean findByCode(int codigocarrera);
 
     Carrera saveCarrera(int codigocarrera, Carrera carrera);
 }

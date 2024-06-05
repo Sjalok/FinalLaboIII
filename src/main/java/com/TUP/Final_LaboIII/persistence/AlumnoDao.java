@@ -9,7 +9,7 @@ public interface AlumnoDao {
 
     Alumno loadAlumnoDni(Long dnialumno);
 
-    Alumno findAlumno(int idalumno);
+    boolean findByDni(Long dni);
 
     Alumno newAlumno(Alumno alumno);
 

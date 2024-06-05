@@ -23,8 +23,7 @@ public class CarreraController {
 
     @PutMapping("/{codigocarrera}")
     public Carrera putCarrera(@PathVariable int codigocarrera, @RequestBody Carrera carrera){
-        Carrera carreraAEncontrar = carreraService.findByCode(codigocarrera);
-        return carreraService.saveCarrera(carrera, carreraAEncontrar);
+        return carreraService.saveCarrera(codigocarrera, carrera);
     }
 
     @DeleteMapping("/{codigocarrera}")

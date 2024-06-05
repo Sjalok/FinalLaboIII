@@ -10,9 +10,7 @@ public interface AlumnoService {
 
     Alumno crearAlumno(AlumnoDto alumnoDto);
 
-    Alumno findById(int idalumno);
-
-    Alumno saveAlumno(Alumno alumnoacopiar, Alumno alumno);
+    Alumno saveAlumno(int id, Alumno alumno);
 
     Alumno borrarAlumno(int idalumno);
 }

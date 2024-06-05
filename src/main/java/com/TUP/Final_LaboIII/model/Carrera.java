@@ -24,6 +24,10 @@ public class Carrera {
         return cantCuatrimestres;
     }
 
+    public int getCodigoCarrera() {
+        return codigoCarrera;
+    }
+
     public void agregarMateria(Materia materia){
         listaMaterias.add(materia);
     }

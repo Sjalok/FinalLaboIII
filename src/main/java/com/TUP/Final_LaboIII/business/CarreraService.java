@@ -8,9 +8,7 @@ public interface CarreraService {
 
     Carrera getCarrera(int codigocarrera);
 
-    Carrera findByCode(int codigocarrera);
-
-    Carrera saveCarrera(Carrera carrera, Carrera carreraAEncontrar);
+    Carrera saveCarrera(int codigocarrera, Carrera carrera);
 
     Carrera borrarCarrera(int codigocarrera);
 }

@@ -27,8 +27,7 @@ public class AlumnoController {
 
     @PutMapping("/{idalumno}")
     public Alumno putAlumno(@PathVariable int idalumno, @RequestBody Alumno alumno){
-        Alumno alumnoAEncontrar = alumnoService.findById(idalumno);
-        return alumnoService.saveAlumno(alumno, alumnoAEncontrar);
+        return alumnoService.saveAlumno(idalumno, alumno);
     }
 
     @DeleteMapping("/{idalumno}")

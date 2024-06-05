@@ -18,12 +18,7 @@ public class CarreraServiceImpl implements CarreraService {
     }
 
     @Override
-    public Carrera findByCode(int codigocarrera) {
-        return null;
-    }
-
-    @Override
-    public Carrera saveCarrera(Carrera carrera, Carrera carreraAEncontrar) {
+    public Carrera saveCarrera(int codigocarrera, Carrera carrera) {
         return null;
     }
 

@@ -9,7 +9,7 @@ public interface MateriaDao {
 
     Materia newMateria(Materia materia);
 
-    Materia findByCode(int codigomateria);
+    boolean findByCode(int codigomateria);
 
     Materia saveMateria(int codigomateria, Materia materia);
 
