@@ -5,6 +5,9 @@ import com.TUP.Final_LaboIII.model.Carrera;
 import com.TUP.Final_LaboIII.model.dto.CarreraDto;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+
 @Service
 public class CarreraServiceImpl implements CarreraService {
     @Override
@@ -19,6 +22,16 @@ public class CarreraServiceImpl implements CarreraService {
 
     @Override
     public Carrera saveCarrera(int codigocarrera, Carrera carrera) {
+        return null;
+    }
+
+    @Override
+    public boolean findCarreraByName(String nombrecarrera) {
+        return false;
+    }
+
+    @Override
+    public HashMap<String, List<String>[]> getTodasLasCarreras() {
         return null;
     }
 

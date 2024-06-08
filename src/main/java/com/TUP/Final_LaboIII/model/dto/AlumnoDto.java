@@ -4,6 +4,7 @@ public class AlumnoDto {
     private String nombre;
     private String apellido;
     private Long dni;
+    private String carrera;
 
     public String getNombre() {
         return nombre;
@@ -27,5 +28,13 @@ public class AlumnoDto {
 
     public void setDni(Long dni) {
         this.dni = dni;
+    }
+
+    public String getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
     }
 }

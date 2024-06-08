@@ -6,7 +6,9 @@ import com.TUP.Final_LaboIII.persistence.exception.NotFoundException;
 import com.TUP.Final_LaboIII.persistence.exception.WrongCodeException;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -48,6 +50,30 @@ public class CarreraDaoImpl implements CarreraDao {
         }
         return false;
     }
+
+    @Override
+    public boolean findByName(String nombrecarrera) {
+        for (Carrera carrera: repositorioCarreras.values()) {
+            if (nombrecarrera.equals(carrera.getNombre())) {
+                return true;
+            }
+        }
+        throw new NotFoundException("No existe una carrera con ese nombre.");
+    }
+
+    @Override
+    public HashMap<String, List<String>> mostrarTodasLasCarreras() {
+        HashMap<String, List<String>> todasLasCarreras = new HashMap<>();
+        List<String> carreras = new ArrayList<>();
+
+        for (Carrera carrera: repositorioCarreras.values()) {
+            carreras.add(carrera.getNombre());
+        }
+
+        todasLasCarreras.put("Carreras:", carreras);
+        return todasLasCarreras;
+    }
+
 
     @Override
     public Carrera saveCarrera(int codigocarrera, Carrera carrera) {

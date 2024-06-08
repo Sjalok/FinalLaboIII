@@ -5,6 +5,9 @@ import com.TUP.Final_LaboIII.model.Carrera;
 import com.TUP.Final_LaboIII.model.dto.CarreraDto;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+
 @RestController
 @RequestMapping("/carrera")
 public class CarreraController {
@@ -20,6 +23,9 @@ public class CarreraController {
     public Carrera getCarrera(@PathVariable int codigocarrera) {
         return carreraService.getCarrera(codigocarrera);
     }
+
+    @GetMapping("/carreras")
+    public HashMap<String, List<String>[]> getTodasCarreras(){return carreraService.getTodasLasCarreras();}
 
     @PutMapping("/{codigocarrera}")
     public Carrera putCarrera(@PathVariable int codigocarrera, @RequestBody Carrera carrera){
