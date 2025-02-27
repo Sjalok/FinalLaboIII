@@ -25,7 +25,7 @@ public class CarreraController {
     }
 
     @GetMapping("/carreras")
-    public HashMap<String, List<String>[]> getTodasCarreras(){return carreraService.getTodasLasCarreras();}
+    public HashMap<String, List<String>> getTodasCarreras(){return carreraService.getTodasLasCarreras();}
 
     @PutMapping("/{codigocarrera}")
     public Carrera putCarrera(@PathVariable int codigocarrera, @RequestBody Carrera carrera){

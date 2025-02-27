@@ -11,6 +11,8 @@ public interface AlumnoDao {
 
     boolean findByDni(Long dni);
 
+    boolean findById(int idalumno);
+
     Alumno newAlumno(Alumno alumno);
 
     Alumno deleteAlumno(int idalumno);

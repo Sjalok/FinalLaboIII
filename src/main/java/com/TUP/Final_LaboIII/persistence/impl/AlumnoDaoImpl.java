@@ -2,8 +2,6 @@ package com.TUP.Final_LaboIII.persistence.impl;
 
 import com.TUP.Final_LaboIII.model.Alumno;
 import com.TUP.Final_LaboIII.persistence.AlumnoDao;
-import com.TUP.Final_LaboIII.persistence.exception.WrongDniException;
-import com.TUP.Final_LaboIII.persistence.exception.NotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -20,7 +18,7 @@ public class AlumnoDaoImpl implements AlumnoDao {
                 return repositorioAlumnos.replace(dniEncontrado,alumno);
             }
         }
-        throw new NotFoundException("El alumno con ese id no se encuentra guardado.");
+        return null;
     }
 
     @Override
@@ -30,7 +28,7 @@ public class AlumnoDaoImpl implements AlumnoDao {
                 return alumno;
             }
         }
-        throw new NotFoundException("El alumno con ese id no se encuentra guardado.");
+        return null;
     }
 
     @Override
@@ -40,14 +38,24 @@ public class AlumnoDaoImpl implements AlumnoDao {
                 return alumno;
             }
         }
-        throw new NotFoundException("El alumno con ese dni no se encuentra guardado.");
+        return null;
     }
 
     @Override
     public boolean findByDni(Long dni) {
         for (Alumno alumno: repositorioAlumnos.values()) {
             if (dni.equals(alumno.getDni())){
-                throw new WrongDniException("Hay un error con el dni: ya existe otro alumno con ese dni.");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean findById(int idalumno) {
+        for (Alumno alumno: repositorioAlumnos.values()) {
+            if (idalumno == alumno.getId()) {
+                return true;
             }
         }
         return false;
@@ -66,6 +74,6 @@ public class AlumnoDaoImpl implements AlumnoDao {
                 return repositorioAlumnos.remove(dniEncontrado);
             }
         }
-        throw new NotFoundException("El alumno con ese id no se encuentra guardado.");
+        return null;
     }
 }

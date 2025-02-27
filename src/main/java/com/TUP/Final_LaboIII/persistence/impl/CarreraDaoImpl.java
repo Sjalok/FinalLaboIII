@@ -2,8 +2,8 @@ package com.TUP.Final_LaboIII.persistence.impl;
 
 import com.TUP.Final_LaboIII.model.Carrera;
 import com.TUP.Final_LaboIII.persistence.CarreraDao;
-import com.TUP.Final_LaboIII.persistence.exception.NotFoundException;
-import com.TUP.Final_LaboIII.persistence.exception.WrongCodeException;
+import com.TUP.Final_LaboIII.business.exception.NotFoundException;
+import com.TUP.Final_LaboIII.business.exception.WrongCodeException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class CarreraDaoImpl implements CarreraDao {
                 return repositorioCarreras.remove(codigocarrera);
             }
         }
-        throw new NotFoundException("La carrera con ese codigo no se encuentra.");
+        return null;
     }
 
     @Override
@@ -38,14 +38,14 @@ public class CarreraDaoImpl implements CarreraDao {
                 return carrera;
             }
         }
-        throw new NotFoundException("La carrera con ese codigo no se encuentra.");
+        return null;
     }
 
     @Override
     public boolean findByCode(int codigocarrera) {
         for (Carrera carrera: repositorioCarreras.values()) {
             if (codigocarrera == carrera.getCodigoCarrera()) {
-                throw new WrongCodeException("Hay un problema con el codigo: ya se encuentra una carrea con ese codigo.");
+                return true;
             }
         }
         return false;
@@ -55,10 +55,10 @@ public class CarreraDaoImpl implements CarreraDao {
     public boolean findByName(String nombrecarrera) {
         for (Carrera carrera: repositorioCarreras.values()) {
             if (nombrecarrera.equals(carrera.getNombre())) {
-                return true;
+                return false;
             }
         }
-        throw new NotFoundException("No existe una carrera con ese nombre.");
+        return true;
     }
 
     @Override
@@ -82,6 +82,6 @@ public class CarreraDaoImpl implements CarreraDao {
                 return repositorioCarreras.replace(codigocarrera, carrera);
             }
         }
-        throw new NotFoundException("La carrera con ese codigo no se encuentra.");
+        return null;
     }
 }

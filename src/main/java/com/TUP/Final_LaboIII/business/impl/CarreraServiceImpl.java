@@ -1,8 +1,11 @@
 package com.TUP.Final_LaboIII.business.impl;
 
 import com.TUP.Final_LaboIII.business.CarreraService;
+import com.TUP.Final_LaboIII.business.exception.NotFoundException;
 import com.TUP.Final_LaboIII.model.Carrera;
 import com.TUP.Final_LaboIII.model.dto.CarreraDto;
+import com.TUP.Final_LaboIII.persistence.CarreraDao;
+import com.TUP.Final_LaboIII.persistence.impl.CarreraDaoImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -10,6 +13,8 @@ import java.util.List;
 
 @Service
 public class CarreraServiceImpl implements CarreraService {
+
+    private static final CarreraDao carreraDao = new CarreraDaoImpl();
     @Override
     public Carrera crearCarrera(CarreraDto carreraDto) {
         return null;
@@ -17,7 +22,13 @@ public class CarreraServiceImpl implements CarreraService {
 
     @Override
     public Carrera getCarrera(int codigocarrera) {
-        return null;
+        Carrera c = carreraDao.loadCarrera(codigocarrera);
+
+        if (c == null) {
+            throw new NotFoundException("No existe una carrera con ese codigo.");
+        }
+
+        return c;
     }
 
     @Override
@@ -26,17 +37,15 @@ public class CarreraServiceImpl implements CarreraService {
     }
 
     @Override
-    public boolean findCarreraByName(String nombrecarrera) {
-        return false;
-    }
-
-    @Override
-    public HashMap<String, List<String>[]> getTodasLasCarreras() {
-        return null;
+    public HashMap<String, List<String>> getTodasLasCarreras() {
+        return carreraDao.mostrarTodasLasCarreras();
     }
 
     @Override
     public Carrera borrarCarrera(int codigocarrera) {
-        return null;
+        if (carreraDao.findByCode(codigocarrera)) {
+            return carreraDao.deleteCarrera(codigocarrera);
+        }
+        throw new NotFoundException("No existe una carrera con ese codigo.");
     }
 }

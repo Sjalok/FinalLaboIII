@@ -2,6 +2,7 @@ package com.TUP.Final_LaboIII.model;
 
 public class Asignatura {
     private Materia materia;
+    private EstadoAsignatura estado;
     private Integer nota;
 
     public Asignatura() {
@@ -21,5 +22,13 @@ public class Asignatura {
 
     public void setNota(Integer nota) {
         this.nota = nota;
+    }
+
+    public EstadoAsignatura getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoAsignatura estado) {
+        this.estado = estado;
     }
 }

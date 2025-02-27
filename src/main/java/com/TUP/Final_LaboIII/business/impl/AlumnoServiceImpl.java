@@ -1,6 +1,7 @@
 package com.TUP.Final_LaboIII.business.impl;
 
 import com.TUP.Final_LaboIII.business.AlumnoService;
+import com.TUP.Final_LaboIII.business.exception.NotFoundException;
 import com.TUP.Final_LaboIII.model.Alumno;
 import com.TUP.Final_LaboIII.model.dto.AlumnoDto;
 import com.TUP.Final_LaboIII.persistence.AlumnoDao;
@@ -12,16 +13,33 @@ public class AlumnoServiceImpl implements AlumnoService {
     private static final AlumnoDao alumnoDao = new AlumnoDaoImpl();
     @Override
     public Alumno getAlumnoXId(int idalumno) {
-        return alumnoDao.loadAlumnoId(idalumno);
+        Alumno a = alumnoDao.loadAlumnoId(idalumno);
+
+        if (a == null) {
+            throw new NotFoundException("No se ha encontrado un alumno con ese id.");
+        }
+
+        return a;
     }
 
     @Override
     public Alumno getAlumnoXDni(Long dnialumno) {
-        return alumnoDao.loadAlumnoDni(dnialumno);
+        Alumno a = alumnoDao.loadAlumnoDni(dnialumno);
+
+        if (a == null) {
+            throw new NotFoundException("No se ha encontrado un alumno con ese dni.");
+        }
+
+        return a;
     }
 
     @Override
     public Alumno crearAlumno(AlumnoDto alumnoDto) {
+        return null;
+    }
+
+    @Override
+    public Alumno cambiarEstado(int idalumno, int idasignatura, String estado) {
         return null;
     }
 
@@ -32,6 +50,9 @@ public class AlumnoServiceImpl implements AlumnoService {
 
     @Override
     public Alumno borrarAlumno(int idalumno){
-        return alumnoDao.deleteAlumno(idalumno);
+        if (alumnoDao.findById(idalumno)) {
+            return alumnoDao.deleteAlumno(idalumno);
+        }
+        throw new NotFoundException("No se ha encontrado un alumno con ese id.");
     }
 }

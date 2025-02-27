@@ -2,7 +2,6 @@ package com.TUP.Final_LaboIII.model.dto;
 
 public class MateriaDto {
     private String nombre;
-
     private int materiaId;
 
     public String getNombre() {

@@ -1,10 +1,9 @@
 package com.TUP.Final_LaboIII.persistence.impl;
 
-import com.TUP.Final_LaboIII.model.Alumno;
 import com.TUP.Final_LaboIII.model.Materia;
 import com.TUP.Final_LaboIII.persistence.MateriaDao;
-import com.TUP.Final_LaboIII.persistence.exception.NotFoundException;
-import com.TUP.Final_LaboIII.persistence.exception.WrongCodeException;
+import com.TUP.Final_LaboIII.business.exception.NotFoundException;
+import com.TUP.Final_LaboIII.business.exception.WrongCodeException;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -21,7 +20,7 @@ public class MateriaDaoImpl implements MateriaDao {
                 return materia;
             }
         }
-        throw new NotFoundException("No se encuentra una materia con ese id.");
+        return null;
     }
 
     @Override
@@ -31,7 +30,7 @@ public class MateriaDaoImpl implements MateriaDao {
                 return materia;
             }
         }
-        throw new NotFoundException("No se encuentra una materia con ese nombre.");
+        return null;
     }
 
     @Override
@@ -43,7 +42,7 @@ public class MateriaDaoImpl implements MateriaDao {
     public boolean findByCode(int codigomateria) {
         for (Materia materia: repositorioMaterias.values()) {
             if (codigomateria == materia.getMateriaId()) {
-                throw new WrongCodeException("Hay un problema con el codigo: ya se encuentra una materia con ese codigo.");
+                return true;
             }
         }
         return false;
@@ -56,7 +55,7 @@ public class MateriaDaoImpl implements MateriaDao {
                 return repositorioMaterias.replace(codigomateria,materia);
             }
         }
-        throw new NotFoundException("No se encuentra una materia con ese nombre.");
+        return null;
     }
 
     @Override
@@ -66,6 +65,6 @@ public class MateriaDaoImpl implements MateriaDao {
                 return repositorioMaterias.remove(codigomateria);
             }
         }
-        throw new NotFoundException("No se encuentra una materia con ese nombre.");
+        return null;
     }
 }

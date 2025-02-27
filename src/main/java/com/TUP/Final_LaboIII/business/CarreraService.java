@@ -13,9 +13,7 @@ public interface CarreraService {
 
     Carrera saveCarrera(int codigocarrera, Carrera carrera);
 
-    boolean findCarreraByName(String nombrecarrera);
-
-    HashMap<String, List<String>[]> getTodasLasCarreras();
+    HashMap<String, List<String>> getTodasLasCarreras();
 
     Carrera borrarCarrera(int codigocarrera);
 }

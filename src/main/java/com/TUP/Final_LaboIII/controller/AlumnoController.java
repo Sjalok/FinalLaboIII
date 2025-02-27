@@ -16,8 +16,8 @@ public class AlumnoController {
     }
 
     @GetMapping("/{dnialumno}")
-    public Alumno getAlumnoXDni(@PathVariable Long dni) {
-        return alumnoService.getAlumnoXDni(dni);
+    public Alumno getAlumnoXDni(@PathVariable Long dnialumno) {
+        return alumnoService.getAlumnoXDni(dnialumno);
     }
 
     @PostMapping
@@ -28,6 +28,11 @@ public class AlumnoController {
     @PutMapping("/{idalumno}")
     public Alumno putAlumno(@PathVariable int idalumno, @RequestBody Alumno alumno){
         return alumnoService.saveAlumno(idalumno, alumno);
+    }
+
+    @PutMapping("/{idalumno}/asignatura/{idasignatura}")
+    public Alumno cambiarEstado(@PathVariable int idalumno, @PathVariable int idasignatura, @RequestParam String estado) {
+        return alumnoService.cambiarEstado(idalumno, idasignatura, estado);
     }
 
     @DeleteMapping("/{idalumno}")

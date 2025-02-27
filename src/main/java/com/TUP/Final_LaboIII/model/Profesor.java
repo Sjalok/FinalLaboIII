@@ -7,7 +7,6 @@ public class Profesor {
     private String nombre;
     private String apellido;
     private final String titulo;
-
     private List<Materia> materiasDictadas;
 
     public Profesor(Long dni, String nombre, String apellido, String titulo) {

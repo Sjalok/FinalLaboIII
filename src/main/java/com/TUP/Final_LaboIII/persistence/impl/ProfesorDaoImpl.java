@@ -2,8 +2,8 @@ package com.TUP.Final_LaboIII.persistence.impl;
 
 import com.TUP.Final_LaboIII.model.Profesor;
 import com.TUP.Final_LaboIII.persistence.ProfesorDao;
-import com.TUP.Final_LaboIII.persistence.exception.NotFoundException;
-import com.TUP.Final_LaboIII.persistence.exception.WrongDniException;
+import com.TUP.Final_LaboIII.business.exception.NotFoundException;
+import com.TUP.Final_LaboIII.business.exception.WrongDniException;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -26,17 +26,17 @@ public class ProfesorDaoImpl implements ProfesorDao {
                 return profesor;
             }
         }
-        throw new NotFoundException("No se encuentra un profesor con ese dni.");
+        return null;
     }
 
     @Override
     public boolean findByDni(Long dni) {
         for (Profesor profesor: repositorioProfesores.values()) {
             if (dni.equals(profesor.getDni())) {
-                throw new WrongDniException("Hay un problema con el dni: ya existe un profesor con ese dni.");
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -46,6 +46,6 @@ public class ProfesorDaoImpl implements ProfesorDao {
                 return repositorioProfesores.remove(dni);
             }
         }
-        throw new NotFoundException("No se encuentra un profesor con ese dni.");
+        return null;
     }
 }

@@ -3,7 +3,6 @@ package com.TUP.Final_LaboIII.model.dto;
 public class CarreraDto {
     private String nombre;
     private int codigoCarrera;
-    private String departamento;
     private int cantCuatrimestres;
 
     public String getNombre() {
@@ -20,14 +19,6 @@ public class CarreraDto {
 
     public void setCodigoCarrera(int codigoCarrera) {
         this.codigoCarrera = codigoCarrera;
-    }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
     }
 
     public int getCantCuatrimestres() {
