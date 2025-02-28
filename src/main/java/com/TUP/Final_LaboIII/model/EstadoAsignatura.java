@@ -4,5 +4,6 @@ public enum EstadoAsignatura {
     NO_CURSADA,
     CURSADA,
     APROBADA,
-    PERDIDA
+    PERDIDA,
+    CURSANDO
 }

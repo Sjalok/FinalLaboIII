@@ -10,7 +10,7 @@ public interface AlumnoService {
 
     Alumno crearAlumno(AlumnoDto alumnoDto);
 
-    Alumno cambiarEstado(int idalumno, int idasignatura, String estado);
+    Alumno cambiarEstado(int idalumno, String nombreasignatura, String estado);
 
     Alumno saveAlumno(int id, Alumno alumno);
 

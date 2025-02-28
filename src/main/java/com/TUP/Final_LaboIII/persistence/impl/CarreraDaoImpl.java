@@ -6,10 +6,7 @@ import com.TUP.Final_LaboIII.business.exception.NotFoundException;
 import com.TUP.Final_LaboIII.business.exception.WrongCodeException;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class CarreraDaoImpl implements CarreraDao {
@@ -18,11 +15,15 @@ public class CarreraDaoImpl implements CarreraDao {
 
     @Override
     public Carrera newCarrera(Carrera carrera) {
+        int nuevoId = repositorioCarreras.isEmpty() ? 1 : Collections.max(repositorioCarreras.keySet()) + 1;
         return repositorioCarreras.put(carrera.getCodigoCarrera() ,carrera);
     }
 
     @Override
     public Carrera deleteCarrera(int codigocarrera) {
+        if (!findByCode(codigocarrera)) {
+            throw new NotFoundException("No se encontro una carrera con el id " + codigocarrera);
+        }
         for (Carrera carrera: repositorioCarreras.values()) {
             if (codigocarrera == carrera.getCodigoCarrera()) {
                 return repositorioCarreras.remove(codigocarrera);
@@ -33,6 +34,9 @@ public class CarreraDaoImpl implements CarreraDao {
 
     @Override
     public Carrera loadCarrera(int codigocarrera) {
+        if (!findByCode(codigocarrera)) {
+            throw new NotFoundException("No se encontro una carrera con el id " + codigocarrera);
+        }
         for (Carrera carrera: repositorioCarreras.values()) {
             if (codigocarrera == carrera.getCodigoCarrera()) {
                 return carrera;
@@ -77,6 +81,11 @@ public class CarreraDaoImpl implements CarreraDao {
 
     @Override
     public Carrera saveCarrera(int codigocarrera, Carrera carrera) {
+        if (!findByCode(codigocarrera)) {
+            throw new NotFoundException("No se encontro una carrera con el id " + codigocarrera);
+        } else if (!repositorioCarreras.get(codigocarrera).getNombre().equals(carrera.getNombre())) {
+            throw new NotFoundException("No se encontro una carrera con el id " + codigocarrera);
+        }
         for (Carrera carreras: repositorioCarreras.values()) {
             if (codigocarrera == carrera.getCodigoCarrera()) {
                 return repositorioCarreras.replace(codigocarrera, carrera);

@@ -4,6 +4,7 @@ public class Asignatura {
     private Materia materia;
     private EstadoAsignatura estado;
     private Integer nota;
+    private Integer idAlumno;
 
     public Asignatura() {
     }
@@ -30,5 +31,17 @@ public class Asignatura {
 
     public void setEstado(EstadoAsignatura estado) {
         this.estado = estado;
+    }
+
+    public Integer getIdAlumno() {
+        return idAlumno;
+    }
+
+    public void setIdAlumno(Integer idAlumno) {
+        this.idAlumno = idAlumno;
+    }
+
+    public String getMateriaNombre() {
+        return materia.getNombre();
     }
 }

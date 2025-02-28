@@ -6,17 +6,18 @@ import com.TUP.Final_LaboIII.business.exception.NotFoundException;
 import com.TUP.Final_LaboIII.business.exception.WrongDniException;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 @Repository
 public class ProfesorDaoImpl implements ProfesorDao {
 
-    private static Map<Long, Profesor> repositorioProfesores = new HashMap<>();
+    private static Map<Integer, Profesor> repositorioProfesores = new HashMap<>();
 
-    @Override
     public Profesor newProfesor(Profesor profesor) {
-        return repositorioProfesores.put(profesor.getDni(),profesor);
+        int nuevoId = repositorioProfesores.isEmpty() ? 1 : Collections.max(repositorioProfesores.keySet()) + 1;
+        return repositorioProfesores.put(nuevoId, profesor);
     }
 
     @Override
@@ -26,7 +27,7 @@ public class ProfesorDaoImpl implements ProfesorDao {
                 return profesor;
             }
         }
-        return null;
+        throw new NotFoundException("No se encontro al profesor con ese dni");
     }
 
     @Override
@@ -41,6 +42,9 @@ public class ProfesorDaoImpl implements ProfesorDao {
 
     @Override
     public Profesor deleteProfesor(Long dni) {
+        if (!findByDni(dni)) {
+            throw new NotFoundException("No se encontro al profesor con ese dni");
+        }
         for (Profesor profesor: repositorioProfesores.values()) {
             if (dni.equals(profesor.getDni())) {
                 return repositorioProfesores.remove(dni);

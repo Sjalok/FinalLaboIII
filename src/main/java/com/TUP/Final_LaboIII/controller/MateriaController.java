@@ -33,10 +33,7 @@ public class MateriaController {
     }
 
     @PutMapping("/{idmateria}")
-    public Materia modificarMateria(@PathVariable Integer idmateria, @RequestBody Materia materia){
-        if (materia.getMateriaId() != idmateria) {
-            throw new BadRequestException("El ID de la materia en la URL y en el body no coinciden.");
-        }
+    public Materia modificarMateria(@RequestBody Materia materia){
         return materiaService.saveMateria(materia);
     }
 

@@ -1,10 +1,13 @@
 package com.TUP.Final_LaboIII.persistence.impl;
 
+import com.TUP.Final_LaboIII.business.exception.NotFoundException;
 import com.TUP.Final_LaboIII.model.Alumno;
 import com.TUP.Final_LaboIII.persistence.AlumnoDao;
+import com.TUP.Final_LaboIII.persistence.exception.YaExistenteException;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @Repository
 public class AlumnoDaoImpl implements AlumnoDao {
@@ -12,6 +15,9 @@ public class AlumnoDaoImpl implements AlumnoDao {
 
     @Override
     public Alumno saveAlumno(int idalumno, Alumno alumno) {
+        if (!findById(idalumno)) {
+            throw new NotFoundException("Alumno con el id " + idalumno + " no existe.");
+        }
         for (Alumno alumnos: repositorioAlumnos.values()) {
             if (idalumno == alumnos.getId()) {
                 Long dniEncontrado = alumnos.getDni();
@@ -28,7 +34,7 @@ public class AlumnoDaoImpl implements AlumnoDao {
                 return alumno;
             }
         }
-        return null;
+        throw new NotFoundException("Alumno con el id " + idalumno + " no existe.");
     }
 
     @Override
@@ -38,7 +44,7 @@ public class AlumnoDaoImpl implements AlumnoDao {
                 return alumno;
             }
         }
-        return null;
+        throw new NotFoundException("Alumno con el dni " + dnialumno + " no existe.");
     }
 
     @Override
@@ -61,8 +67,10 @@ public class AlumnoDaoImpl implements AlumnoDao {
         return false;
     }
 
-    @Override
     public Alumno newAlumno(Alumno alumno) {
+        if (findByDni(alumno.getDni())) {
+            throw new YaExistenteException("Alumno con DNI " + alumno.getDni() + " ya existe.");
+        }
         return repositorioAlumnos.put(alumno.getDni(), alumno);
     }
 
@@ -74,6 +82,12 @@ public class AlumnoDaoImpl implements AlumnoDao {
                 return repositorioAlumnos.remove(dniEncontrado);
             }
         }
-        return null;
+        throw new NotFoundException("Alumno con el id " + idalumno + " no existe.");
+    }
+
+    @Override
+    public List<Integer> loadAsignaturasID(int idalumno) {
+        Alumno alumno = loadAlumnoId(idalumno);
+        return alumno.getAsignaturas();
     }
 }

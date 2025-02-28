@@ -6,6 +6,7 @@ import com.TUP.Final_LaboIII.business.exception.NotFoundException;
 import com.TUP.Final_LaboIII.business.exception.WrongCodeException;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,12 +16,10 @@ public class MateriaDaoImpl implements MateriaDao {
     private static Map<Integer, Materia> repositorioMaterias = new HashMap<>();
     @Override
     public Materia loadMateriaId(int idmateria) {
-        for (Materia materia: repositorioMaterias.values()) {
-            if (idmateria == materia.getMateriaId()) {
-                return materia;
-            }
+        if (!findByCode(idmateria)) {
+            throw new NotFoundException("No se encontro una materia con el id " + idmateria);
         }
-        return null;
+        return repositorioMaterias.get(idmateria);
     }
 
     @Override
@@ -30,41 +29,34 @@ public class MateriaDaoImpl implements MateriaDao {
                 return materia;
             }
         }
-        return null;
+        throw new NotFoundException("No se encontro una materia llamada " + nombremateria);
     }
 
-    @Override
     public Materia newMateria(Materia materia) {
-        return repositorioMaterias.put(materia.getMateriaId(), materia);
+        int nuevoId = repositorioMaterias.isEmpty() ? 1 : Collections.max(repositorioMaterias.keySet()) + 1;
+        return repositorioMaterias.put(nuevoId, materia);
     }
 
     @Override
     public boolean findByCode(int codigomateria) {
-        for (Materia materia: repositorioMaterias.values()) {
-            if (codigomateria == materia.getMateriaId()) {
-                return true;
-            }
-        }
-        return false;
+        return repositorioMaterias.containsKey(codigomateria);
     }
 
     @Override
     public Materia saveMateria(int codigomateria, Materia materia) {
-        for (Materia materias: repositorioMaterias.values()) {
-            if (codigomateria == materia.getMateriaId()) {
-                return repositorioMaterias.replace(codigomateria,materia);
-            }
+        if (!findByCode(codigomateria)) {
+            throw new NotFoundException("No se encontro una materia con el id " + codigomateria);
+        } else if (!repositorioMaterias.get(codigomateria).getNombre().equals(materia.getNombre())) {
+            throw new NotFoundException("No se encontro la materia o no coinciden los valores");
         }
-        return null;
+        return repositorioMaterias.replace(codigomateria, materia);
     }
 
     @Override
     public Materia deleteMateria(int codigomateria) {
-        for (Materia materia: repositorioMaterias.values()) {
-            if (codigomateria == materia.getMateriaId()) {
-                return repositorioMaterias.remove(codigomateria);
-            }
+        if (!findByCode(codigomateria)) {
+            throw new NotFoundException("No se encontro una materia con el id " + codigomateria);
         }
-        return null;
+        return repositorioMaterias.remove(codigomateria);
     }
 }

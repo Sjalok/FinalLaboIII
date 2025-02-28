@@ -7,7 +7,7 @@ public class Alumno {
     private String nombre;
     private String apellido;
     private Long dni;
-    private List<Asignatura> asignatura;
+    private List<Integer> asignaturas;
     private String carrera;
 
     public Alumno() {
@@ -45,12 +45,12 @@ public class Alumno {
         this.dni = dni;
     }
 
-    public List<Asignatura> getAsignatura() {
-        return asignatura;
+    public List<Integer> getAsignaturas() {
+        return asignaturas;
     }
 
-    public void setAsignatura(List<Asignatura> asignatura) {
-        this.asignatura = asignatura;
+    public void setAsignaturas(List<Integer> asignaturas) {
+        this.asignaturas = asignaturas;
     }
 
     public String getCarrera() {

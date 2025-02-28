@@ -2,6 +2,8 @@ package com.TUP.Final_LaboIII.persistence;
 
 import com.TUP.Final_LaboIII.model.Alumno;
 
+import java.util.List;
+
 public interface AlumnoDao {
     Alumno saveAlumno (int idalumno, Alumno alumno);
 
@@ -16,4 +18,6 @@ public interface AlumnoDao {
     Alumno newAlumno(Alumno alumno);
 
     Alumno deleteAlumno(int idalumno);
+
+    List<Integer> loadAsignaturasID(int idalumno);
 }

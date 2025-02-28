@@ -39,7 +39,7 @@ public class AlumnoServiceImpl implements AlumnoService {
     }
 
     @Override
-    public Alumno cambiarEstado(int idalumno, int idasignatura, String estado) {
+    public Alumno cambiarEstado(int idalumno, String nombreasignatura, String estado) {
         return null;
     }
 

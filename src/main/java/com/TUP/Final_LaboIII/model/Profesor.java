@@ -51,12 +51,4 @@ public class Profesor {
     public void agregarMateria(Materia materia){
         materiasDictadas.add(materia);
     }
-
-    public void sacarMateria(int idmateria){
-        for (Materia materia: materiasDictadas) {
-            if (materia.getMateriaId() == idmateria) {
-                materiasDictadas.remove(materia);
-            }
-        }
-    }
 }
