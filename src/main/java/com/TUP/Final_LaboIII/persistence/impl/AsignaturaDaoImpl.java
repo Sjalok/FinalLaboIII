@@ -56,4 +56,8 @@ public class AsignaturaDaoImpl  implements AsignaturaDao {
 
         return asignaturas;
     }
+
+    public void deleteAlumnoAsignaturas(Integer idalumno) {
+        repositorioAsignaturas.entrySet().removeIf(entry -> entry.getValue().getIdAlumno().equals(idalumno));
+    }
 }

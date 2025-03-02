@@ -32,11 +32,6 @@ public class CarreraServiceImpl implements CarreraService {
     }
 
     @Override
-    public Carrera saveCarrera(int codigocarrera, Carrera carrera) {
-        return null;
-    }
-
-    @Override
     public HashMap<String, List<String>> getTodasLasCarreras() {
         return carreraDao.mostrarTodasLasCarreras();
     }

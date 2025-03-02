@@ -7,6 +7,8 @@ import com.TUP.Final_LaboIII.model.Alumno;
 import com.TUP.Final_LaboIII.model.dto.AlumnoDto;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 @RequestMapping("/alumno")
 public class AlumnoController {
@@ -34,16 +36,28 @@ public class AlumnoController {
 
     @PostMapping
     public Alumno crearAlumno(@RequestBody AlumnoDto alumnoDto) {
-        return alumnoService.crearAlumno(alumnoDto);
-    }
-
-    @PutMapping("/{idalumno}")
-    public Alumno putAlumno(@PathVariable String idalumno, @RequestBody Alumno alumno){
         try {
-            int id = Integer.parseInt(idalumno);
-            return alumnoService.saveAlumno(id, alumno);
+            Long dni = Long.parseLong(alumnoDto.getDni().toString());
+
+            if (!alumnoDto.getNombre().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$")) {
+                throw new BadRequestException("El nombre solo puede contener letras.");
+            }
+            if (!alumnoDto.getApellido().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$")) {
+                throw new BadRequestException("El apellido solo puede contener letras.");
+            }
+            if (!alumnoDto.getCarrera().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+                throw new BadRequestException("La carrera solo puede contener letras y espacios.");
+            }
+
+            if (alumnoDto.getNombre() == null || alumnoDto.getApellido() == null ||
+                    alumnoDto.getDni() == null || alumnoDto.getCarrera() == null) {
+                throw new BadRequestException("Todos los campos son obligatorios.");
+            }
+
+            return alumnoService.crearAlumno(alumnoDto);
+
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("El ID del alumno debe contener solo números.");
+            throw new BadRequestException("El DNI del alumno debe contener solo números.");
         }
     }
 
@@ -54,6 +68,14 @@ public class AlumnoController {
 
             if (!nombreasignatura.matches("^[a-zA-Z0-9]+$")) {
                 throw new BadRequestException("El nombre de la asignatura no debe contener caracteres especiales.");
+            }
+
+            if (!estado.matches("^[a-zA-Z0-9]+$")) {
+                throw new BadRequestException("El nombre de la asignatura no debe contener caracteres especiales.");
+            }
+
+            if (estado != "cursada" && estado != "perdida" && estado != "aprobada") {
+                throw new BadRequestException("El estado no puede ser distinto a cursada, perdida o aprobada.");
             }
 
             return alumnoService.cambiarEstado(id, nombreasignatura, estado);
@@ -67,6 +89,31 @@ public class AlumnoController {
         try {
             int id = Integer.parseInt(idalumno);
             return alumnoService.borrarAlumno(id);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("El ID del alumno debe contener solo números.");
+        }
+    }
+
+    @PutMapping("/{idalumno}/{nombreasignatura}")
+    public Alumno inscribirAMateria(@PathVariable String idalumno, @PathVariable String nombreasignatura) {
+        try {
+            int id = Integer.parseInt(idalumno);
+
+            if (!nombreasignatura.matches("^[a-zA-Z0-9]+$")) {
+                throw new BadRequestException("El nombre de la asignatura no debe contener caracteres especiales.");
+            }
+
+            return alumnoService.inscribirseAMateria(id, nombreasignatura);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("El ID del alumno debe contener solo números.");
+        }
+    }
+
+    @GetMapping("/{idalumno}/materias")
+    public HashMap<String, String> verTodasLasMaterias(@PathVariable String idalumno) {
+        try {
+            int id = Integer.parseInt(idalumno);
+            return alumnoService.getTodasMaterias(id);
         } catch (NumberFormatException e) {
             throw new NumberFormatException("El ID del alumno debe contener solo números.");
         }

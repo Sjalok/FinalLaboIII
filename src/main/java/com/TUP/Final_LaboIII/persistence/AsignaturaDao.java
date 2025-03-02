@@ -9,4 +9,5 @@ public interface AsignaturaDao {
     Asignatura newAsignatura(Asignatura asignatura);
     Asignatura loadAsignaturaDni(Integer idalumno, String nombremateria);
     List<Asignatura> loadAsignaturasDni(Integer idalumno);
+    void deleteAlumnoAsignaturas(Integer idalumno);
 }

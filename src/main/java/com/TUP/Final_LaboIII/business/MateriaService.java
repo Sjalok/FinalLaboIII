@@ -11,7 +11,9 @@ public interface MateriaService {
 
     Materia crearMateria(MateriaDto materiadto);
 
-    Materia saveMateria(Materia materia);
+    Materia saveProfesorMateria(MateriaDto materiadto, String nombreprofesor);
+
+    Materia saveCorrelatividadMateria(MateriaDto materiadto, String nombrecorrelatividad, String accion);
 
     Materia deleteMateria(int codigoMateria);
 

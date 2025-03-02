@@ -33,7 +33,12 @@ public class MateriaServiceImpl implements MateriaService {
     }
 
     @Override
-    public Materia saveMateria(Materia materia) {
+    public Materia saveProfesorMateria(MateriaDto materiadto, String nombreprofesor) {
+        return null;
+    }
+
+    @Override
+    public Materia saveCorrelatividadMateria(MateriaDto materiadto, String nombrecorrelatividad, String accion) {
         return null;
     }
 
