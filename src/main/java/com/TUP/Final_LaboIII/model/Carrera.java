@@ -16,6 +16,14 @@ public class Carrera {
         this.cantCuatrimestres = cantCuatrimestres;
     }
 
+    public Carrera(String nombre, int codigoCarrera, int departamento, int cantCuatrimestres, List<Materia> listaMaterias) {
+        this.nombre = nombre;
+        this.codigoCarrera = codigoCarrera;
+        this.departamento = departamento;
+        this.cantCuatrimestres = cantCuatrimestres;
+        this.listaMaterias = listaMaterias;
+    }
+
     public String getNombre() {
         return nombre;
     }

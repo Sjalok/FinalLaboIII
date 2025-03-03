@@ -1,5 +1,6 @@
 package com.TUP.Final_LaboIII.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Materia {
@@ -11,6 +12,11 @@ public class Materia {
 
     public Materia(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Materia(String nombre, List<Materia> correlatividades) {
+        this.nombre = nombre;
+        this.correlatividades = correlatividades;
     }
 
     public String getNombre() {

@@ -16,6 +16,14 @@ public class Profesor {
         this.titulo = titulo;
     }
 
+    public Profesor(Long dni, String nombre, String apellido, String titulo, List<Materia> materiasDictadas) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.titulo = titulo;
+        this.materiasDictadas = materiasDictadas;
+    }
+
     public Long getDni() {
         return dni;
     }

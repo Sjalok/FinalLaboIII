@@ -49,12 +49,15 @@ public class AlumnoDaoImpl implements AlumnoDao {
 
     @Override
     public boolean findByDni(Long dni) {
+        if (dni == null) {
+            return false;
+        }
         for (Alumno alumno: repositorioAlumnos.values()) {
             if (dni.equals(alumno.getDni())){
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -68,6 +71,10 @@ public class AlumnoDaoImpl implements AlumnoDao {
     }
 
     public Alumno newAlumno(Alumno alumno) {
+        System.out.println("Alumno recibido en DAO: " + alumno.getId() + ", " + alumno.getNombre() + ", " + alumno.getDni());
+        if (alumno.getDni() == null) {
+            throw new IllegalArgumentException("El DNI del alumno no puede ser null.");
+        }
         if (findByDni(alumno.getDni())) {
             throw new YaExistenteException("Alumno con DNI " + alumno.getDni() + " ya existe.");
         }

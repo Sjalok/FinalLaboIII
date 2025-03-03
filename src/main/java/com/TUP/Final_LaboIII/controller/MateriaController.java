@@ -43,7 +43,7 @@ public class MateriaController {
         return materiaService.crearMateria(materiadto);
     }
 
-    @PutMapping("/{nombremateria}")
+    @PutMapping("/{nombremateria}/correlatividad")
     public Materia modificarCorrelatividadMateria(@PathVariable String nombremateria, @RequestParam String correlatividad, @RequestParam String accion){
         if (!accion.equals("agregar") && !accion.equals("eliminar")) {
             throw new BadRequestException("La accion solo puede ser agregar o eliminar.");
@@ -56,7 +56,7 @@ public class MateriaController {
         return materiaService.saveCorrelatividadMateria(nombremateria, correlatividad, accion);
     }
 
-    @PutMapping("/{nombremateria}")
+    @PutMapping("/{nombremateria}/nombre")
     public Materia modificarNombreMateria(@PathVariable String nombremateria, @RequestParam String nuevonombre) {
         if (!nombremateria.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$") || !nuevonombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$")) {
             throw new BadRequestException("El nombre de la materia o la nueva materia solo puede contener letras y espacios, sin números ni caracteres especiales.");

@@ -1,5 +1,6 @@
 package com.TUP.Final_LaboIII.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Alumno {
@@ -11,6 +12,15 @@ public class Alumno {
     private String carrera;
 
     public Alumno() {
+    }
+
+    public Alumno(int id, String nombre, String apellido, Long dni, List<Integer> asignaturas, String carrera) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.asignaturas = asignaturas;
+        this.carrera = carrera;
     }
 
     public int getId() {

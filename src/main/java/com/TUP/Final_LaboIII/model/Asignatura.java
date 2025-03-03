@@ -9,6 +9,9 @@ public class Asignatura {
     public Asignatura() {
     }
 
+    public Asignatura(Materia materia, EstadoAsignatura estado, int nota, int idalumno) {
+    }
+
     public Materia getMateria() {
         return materia;
     }
