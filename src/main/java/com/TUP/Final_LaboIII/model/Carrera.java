@@ -5,11 +5,11 @@ import java.util.List;
 public class Carrera {
     private String nombre;
     private int codigoCarrera;
-    private String departamento;
+    private int departamento;
     private int cantCuatrimestres;
     private List<Materia> listaMaterias;
 
-    public Carrera(String nombre, int codigoCarrera, String departamento, int cantCuatrimestres) {
+    public Carrera(String nombre, int codigoCarrera, int departamento, int cantCuatrimestres) {
         this.nombre = nombre;
         this.codigoCarrera = codigoCarrera;
         this.departamento = departamento;
@@ -28,15 +28,19 @@ public class Carrera {
         return codigoCarrera;
     }
 
-    public void agregarMateria(Materia materia){
-        listaMaterias.add(materia);
+    public List<Materia> getListaMaterias() {
+        return listaMaterias;
     }
 
-    public void sacarMateria(int idMateria){
-        for (Materia materia: listaMaterias) {
-            if (materia.getMateriaId() == idMateria) {
-                listaMaterias.remove(materia);
-            }
-        }
+    public void setListaMaterias(List<Materia> listaMaterias) {
+        this.listaMaterias = listaMaterias;
+    }
+
+    public int getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(int departamento) {
+        this.departamento = departamento;
     }
 }

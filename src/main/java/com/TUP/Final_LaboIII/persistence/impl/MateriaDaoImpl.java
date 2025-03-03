@@ -14,13 +14,6 @@ import java.util.Map;
 public class MateriaDaoImpl implements MateriaDao {
 
     private static Map<Integer, Materia> repositorioMaterias = new HashMap<>();
-    @Override
-    public Materia loadMateriaId(int idmateria) {
-        if (!findByCode(idmateria)) {
-            throw new NotFoundException("No se encontro una materia con el id " + idmateria);
-        }
-        return repositorioMaterias.get(idmateria);
-    }
 
     @Override
     public Materia loadMateriaNombre(String nombremateria) {
@@ -43,13 +36,16 @@ public class MateriaDaoImpl implements MateriaDao {
     }
 
     @Override
-    public Materia saveMateria(int codigomateria, Materia materia) {
-        if (!findByCode(codigomateria)) {
-            throw new NotFoundException("No se encontro una materia con el id " + codigomateria);
-        } else if (!repositorioMaterias.get(codigomateria).getNombre().equals(materia.getNombre())) {
-            throw new NotFoundException("No se encontro la materia o no coinciden los valores");
-        }
-        return repositorioMaterias.replace(codigomateria, materia);
+    public Materia saveMateria(Materia materia) {
+        Integer idMateria = repositorioMaterias.entrySet().stream()
+                .filter(entry -> entry.getValue().getNombre().equals(materia.getNombre()))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("No se encontro una materia con el nombre: " + materia.getNombre()));
+
+        repositorioMaterias.put(idMateria, materia);
+
+        return materia;
     }
 
     @Override
@@ -58,5 +54,10 @@ public class MateriaDaoImpl implements MateriaDao {
             throw new NotFoundException("No se encontro una materia con el id " + codigomateria);
         }
         return repositorioMaterias.remove(codigomateria);
+    }
+
+    @Override
+    public Map<Integer, Materia> getTodasLasMaterias() {
+        return repositorioMaterias;
     }
 }

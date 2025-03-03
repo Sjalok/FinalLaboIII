@@ -1,9 +1,11 @@
 package com.TUP.Final_LaboIII.business;
 
 import com.TUP.Final_LaboIII.model.Alumno;
+import com.TUP.Final_LaboIII.model.Asignatura;
 import com.TUP.Final_LaboIII.model.dto.AlumnoDto;
 
 import java.util.HashMap;
+import java.util.List;
 
 public interface AlumnoService {
     Alumno getAlumnoXId(int idalumno);
@@ -18,5 +20,5 @@ public interface AlumnoService {
 
     Alumno inscribirseAMateria(int idalumno, String nombreasignatura);
 
-    HashMap<String, String> getTodasMaterias(int idalumno);
+    List<Asignatura> getTodasMaterias(int idalumno);
 }

@@ -31,13 +31,14 @@ public class AsignaturaDaoImpl  implements AsignaturaDao {
     }
 
     @Override
-    public Asignatura newAsignatura(Asignatura asignatura) {
+    public Integer newAsignatura(Asignatura asignatura) {
         int nuevoId = repositorioAsignaturas.isEmpty() ? 1 : Collections.max(repositorioAsignaturas.keySet()) + 1;
-        return repositorioAsignaturas.put(nuevoId, asignatura);
+        repositorioAsignaturas.put(nuevoId, asignatura);
+        return nuevoId;
     }
 
     @Override
-    public Asignatura loadAsignaturaDni(Integer idalumno, String nombremateria) {
+    public Asignatura loadAsignaturaid(Integer idalumno, String nombremateria) {
         return repositorioAsignaturas.values().stream()
                 .filter(a -> a.getIdAlumno().equals(idalumno) && a.getMateriaNombre().equals(nombremateria))
                 .findFirst()
@@ -45,7 +46,7 @@ public class AsignaturaDaoImpl  implements AsignaturaDao {
     }
 
     @Override
-    public List<Asignatura> loadAsignaturasDni(Integer idalumno) {
+    public List<Asignatura> loadAsignaturasid(Integer idalumno) {
         List<Asignatura> asignaturas = repositorioAsignaturas.values().stream()
                 .filter(a -> a.getIdAlumno().equals(idalumno))
                 .collect(Collectors.toList());
@@ -59,5 +60,10 @@ public class AsignaturaDaoImpl  implements AsignaturaDao {
 
     public void deleteAlumnoAsignaturas(Integer idalumno) {
         repositorioAsignaturas.entrySet().removeIf(entry -> entry.getValue().getIdAlumno().equals(idalumno));
+    }
+
+    @Override
+    public Map<Integer, Asignatura> getTodasAsignaturas() {
+        return repositorioAsignaturas;
     }
 }

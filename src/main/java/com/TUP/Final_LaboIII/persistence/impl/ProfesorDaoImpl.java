@@ -52,4 +52,17 @@ public class ProfesorDaoImpl implements ProfesorDao {
         }
         return null;
     }
+
+    @Override
+    public Profesor saveProfesor(Profesor profesor) {
+        Integer idProfesor = repositorioProfesores.entrySet().stream()
+                .filter(entry -> entry.getValue().getDni().equals(profesor.getDni()))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("No se encontró un profesor con DNI: " + profesor.getDni()));
+
+        repositorioProfesores.put(idProfesor, profesor);
+
+        return profesor;
+    }
 }

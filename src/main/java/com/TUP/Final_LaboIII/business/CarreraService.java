@@ -14,4 +14,6 @@ public interface CarreraService {
     HashMap<String, List<String>> getTodasLasCarreras();
 
     Carrera borrarCarrera(int codigocarrera);
+
+    Carrera agregarOEliminarMaterias(int codigocarrera, String nombremateria, String accion);
 }

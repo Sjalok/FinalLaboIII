@@ -2,6 +2,7 @@ package com.TUP.Final_LaboIII.model.dto;
 
 public class CarreraDto {
     private String nombre;
+    private int departamento;
     private int codigoCarrera;
     private int cantCuatrimestres;
 
@@ -27,5 +28,13 @@ public class CarreraDto {
 
     public void setCantCuatrimestres(int cantCuatrimestres) {
         this.cantCuatrimestres = cantCuatrimestres;
+    }
+
+    public int getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(int departamento) {
+        this.departamento = departamento;
     }
 }

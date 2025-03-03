@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Materia {
     private String nombre;
-    private Profesor profesor;
     private List<Materia> correlatividades;
 
     public Materia() {
@@ -20,5 +19,13 @@ public class Materia {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public List<Materia> getCorrelatividades() {
+        return correlatividades;
+    }
+
+    public void setCorrelatividades(List<Materia> correlatividades) {
+        this.correlatividades = correlatividades;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/materia")
@@ -27,8 +28,8 @@ public class MateriaController {
     }
 
     @GetMapping("/order") // investigar que iria en el requestbody aca para tomar por codigo asc o desc Y nombre asc o desc
-    public List<Materia> getMateriasOrdenadas(@RequestParam(defaultValue = "nombre_asc") String order) {
-        if (order != "nombre_desc" && order != "nombre_asc" && order != "codigo_asc" && order != "codigo_desc") {
+    public Map<Integer, Materia> getMateriasOrdenadas(@RequestParam(defaultValue = "nombre_asc") String order) {
+        if (!order.equals("nombre_desc") && !order.equals("nombre_asc") && !order.equals("codigo_asc") && !order.equals("codigo_desc")) {
             throw new BadRequestException("El orden el cual se pueden ordenar las materias es: nombre_asc, nombre_desc, codigo_asc o codigo_desc.");
         }
         return materiaService.getMateriasOrdenadas(order);
@@ -43,29 +44,24 @@ public class MateriaController {
     }
 
     @PutMapping("/{nombremateria}")
-    public Materia modificarProfesorMateria(@RequestBody MateriaDto materiadto, @RequestParam String nuevoprofesor){
-            if (!nuevoprofesor.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$")) {
-                throw new BadRequestException("El nombre y apellido del nuevo profesor solo puede contener letras.");
-            }
-
-            if (!materiadto.getNombre().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$")) {
-                throw new BadRequestException("El nombre de la materia solo puede contener letras y espacios, sin números ni caracteres especiales.");
-            }
-
-            return materiaService.saveProfesorMateria(materiadto, nuevoprofesor);
-    }
-
-    @PutMapping("/{nombremateria}")
-    public Materia modificarCorrelatividadMateria(@RequestBody MateriaDto materiadto, @RequestParam String correlatividad, @RequestParam String accion){
-        if (accion != "agregar" && accion != "eliminar") {
+    public Materia modificarCorrelatividadMateria(@PathVariable String nombremateria, @RequestParam String correlatividad, @RequestParam String accion){
+        if (!accion.equals("agregar") && !accion.equals("eliminar")) {
             throw new BadRequestException("La accion solo puede ser agregar o eliminar.");
         }
 
-        if (!materiadto.getNombre().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$")) {
+        if (!nombremateria.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$")) {
             throw new BadRequestException("El nombre de la materia solo puede contener letras y espacios, sin números ni caracteres especiales.");
         }
 
-        return materiaService.saveCorrelatividadMateria(materiadto, correlatividad, accion);
+        return materiaService.saveCorrelatividadMateria(nombremateria, correlatividad, accion);
+    }
+
+    @PutMapping("/{nombremateria}")
+    public Materia modificarNombreMateria(@PathVariable String nombremateria, @RequestParam String nuevonombre) {
+        if (!nombremateria.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$") || !nuevonombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$")) {
+            throw new BadRequestException("El nombre de la materia o la nueva materia solo puede contener letras y espacios, sin números ni caracteres especiales.");
+        }
+        return materiaService.saveMateriaNombre(nombremateria, nuevonombre);
     }
 
     @DeleteMapping("/{idmateria}")

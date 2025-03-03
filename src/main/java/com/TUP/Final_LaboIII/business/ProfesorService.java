@@ -9,4 +9,6 @@ public interface ProfesorService {
     Profesor crearProfesor(ProfesorDto profesorDto);
 
     Profesor borrarProfesor(Long dni);
+
+    Profesor agregarOEliminarMateria(Long dni, String nombremateria, String accion);
 }

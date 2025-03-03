@@ -11,4 +11,6 @@ public interface ProfesorDao {
     boolean findByDni(Long dni);
 
     Profesor deleteProfesor(Long dni);
+
+    Profesor saveProfesor(Profesor profesor);
 }

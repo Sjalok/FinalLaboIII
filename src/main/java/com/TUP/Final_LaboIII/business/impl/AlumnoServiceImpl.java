@@ -2,8 +2,11 @@ package com.TUP.Final_LaboIII.business.impl;
 
 import com.TUP.Final_LaboIII.business.AlumnoService;
 import com.TUP.Final_LaboIII.business.AsignaturaService;
+import com.TUP.Final_LaboIII.business.MateriaService;
+import com.TUP.Final_LaboIII.business.exception.CorrelatividadesException;
 import com.TUP.Final_LaboIII.business.exception.NotFoundException;
 import com.TUP.Final_LaboIII.model.Alumno;
+import com.TUP.Final_LaboIII.model.Asignatura;
 import com.TUP.Final_LaboIII.model.dto.AlumnoDto;
 import com.TUP.Final_LaboIII.persistence.AlumnoDao;
 import com.TUP.Final_LaboIII.persistence.impl.AlumnoDaoImpl;
@@ -17,6 +20,7 @@ import java.util.List;
 public class AlumnoServiceImpl implements AlumnoService {
     private static final AlumnoDao alumnoDao = new AlumnoDaoImpl();
     AsignaturaService asignaturaService;
+    MateriaService materiaService;
     @Override
     public Alumno getAlumnoXId(int idalumno) {
         return alumnoDao.loadAlumnoId(idalumno);
@@ -41,9 +45,11 @@ public class AlumnoServiceImpl implements AlumnoService {
 
     @Override
     public Alumno cambiarEstado(int idalumno, String nombreasignatura, String estado) {
+        if (materiaService.getMateriaXNombre(nombreasignatura) == null) {
+            throw new NotFoundException("No existe una materia con ese nombre.");
+        }
         Alumno a = alumnoDao.loadAlumnoId(idalumno);
-        asignaturaService.tieneMateria(idalumno, nombreasignatura, estado);
-        asignaturaService.checkCorrelatividades(idalumno, a.getAsignaturas());
+        asignaturaService.checkEstado(idalumno,nombreasignatura,estado);
 
         return this.saveAlumno(idalumno, a);
     }
@@ -64,14 +70,16 @@ public class AlumnoServiceImpl implements AlumnoService {
     @Override
     public Alumno inscribirseAMateria(int idalumno, String nombreasignatura) {
         Alumno a = alumnoDao.loadAlumnoId(idalumno);
-        asignaturaService.tieneMateria(idalumno, nombreasignatura, "cursando");
-        asignaturaService.checkCorrelatividades(idalumno, a.getAsignaturas());
+        a = asignaturaService.nuevaAsignatura(a, nombreasignatura);
+        if (!asignaturaService.checkCorrelatividades(idalumno, nombreasignatura, "nueva")) {
+            throw new CorrelatividadesException("Debe aprobar las correlatividades para cambiar de estado de esa materia.");
+        }
 
         return this.saveAlumno(idalumno,a);
     }
 
     @Override
-    public HashMap<String, String> getTodasMaterias(int idalumno) {
+    public List<Asignatura> getTodasMaterias(int idalumno) {
         List<Integer> listaAsignaturas = alumnoDao.loadAsignaturasID(idalumno);
         return asignaturaService.listaMaterias(idalumno);
     }

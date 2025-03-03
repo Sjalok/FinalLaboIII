@@ -113,7 +113,7 @@ public class AlumnoController {
     public HashMap<String, String> verTodasLasMaterias(@PathVariable String idalumno) {
         try {
             int id = Integer.parseInt(idalumno);
-            return alumnoService.getTodasMaterias(id);
+            return (HashMap<String, String>) alumnoService.getTodasMaterias(id);
         } catch (NumberFormatException e) {
             throw new NumberFormatException("El ID del alumno debe contener solo números.");
         }

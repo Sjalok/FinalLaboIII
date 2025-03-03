@@ -21,6 +21,7 @@ public class CarreraController {
         try {
             Integer codigo = Integer.parseInt(String.valueOf(carreraDto.getCodigoCarrera()));
             Integer cuatris = Integer.parseInt(String.valueOf(carreraDto.getCantCuatrimestres()));
+            Integer departamento = Integer.parseInt(String.valueOf(carreraDto.getDepartamento()));
 
             if (codigo <= 0) {
                 throw new BadRequestException("Código de carrera no puede ser menor a 1.");
@@ -32,6 +33,10 @@ public class CarreraController {
 
             if (carreraDto.getNombre() == null) {
                 throw new BadRequestException("Todos los campos son obligatorios.");
+            }
+
+            if (departamento < 1) {
+                throw new BadRequestException("El codigo de departamento no puede ser menor a 1.");
             }
 
             return carreraService.crearCarrera(carreraDto);
@@ -59,6 +64,23 @@ public class CarreraController {
         try {
             int codigo = Integer.parseInt(codigocarrera);
             return carreraService.borrarCarrera(codigo);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("El codigo de la carrera debe contener solo números.");
+        }
+    }
+
+    @PutMapping("/{codigocarrera}")
+    public Carrera agregarOSacarMateria(@PathVariable String codigocarrera, @RequestParam String nombremateria, @RequestParam String accion) {
+        accion = accion.toLowerCase();
+        if (!accion.equals("eliminar") || accion.equals("agregar")) {
+            throw new BadRequestException("La accion solo puede ser eliminar o agregar.");
+        }
+        if (!nombremateria.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$")) {
+            throw new BadRequestException("El nombre de la materia solo puede contener letras y espacios, sin números ni caracteres especiales.");
+        }
+        try {
+            Integer codigo = Integer.parseInt(codigocarrera);
+            return carreraService.agregarOEliminarMaterias(codigo, nombremateria, accion);
         } catch (NumberFormatException e) {
             throw new NumberFormatException("El codigo de la carrera debe contener solo números.");
         }

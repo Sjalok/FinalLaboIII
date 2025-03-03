@@ -1,9 +1,7 @@
 package com.TUP.Final_LaboIII.exception;
 
-import com.TUP.Final_LaboIII.business.exception.NotFoundException;
+import com.TUP.Final_LaboIII.business.exception.*;
 import com.TUP.Final_LaboIII.business.exception.NumberFormatException;
-import com.TUP.Final_LaboIII.business.exception.WrongCodeException;
-import com.TUP.Final_LaboIII.business.exception.WrongDniException;
 import com.TUP.Final_LaboIII.controller.exception.BadRequestException;
 import com.TUP.Final_LaboIII.persistence.exception.YaExistenteException;
 import org.springframework.http.HttpStatus;
@@ -49,5 +47,11 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleNumberFormatException(NumberFormatException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler({CorrelatividadesException.class})
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<String> handleCorrelatividadesException(CorrelatividadesException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 }

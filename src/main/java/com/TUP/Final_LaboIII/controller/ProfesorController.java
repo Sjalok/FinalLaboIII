@@ -2,11 +2,12 @@ package com.TUP.Final_LaboIII.controller;
 
 import com.TUP.Final_LaboIII.business.ProfesorService;
 import com.TUP.Final_LaboIII.business.exception.NumberFormatException;
-import com.TUP.Final_LaboIII.business.impl.ProfesorServiceImpl;
 import com.TUP.Final_LaboIII.controller.exception.BadRequestException;
 import com.TUP.Final_LaboIII.model.Profesor;
 import com.TUP.Final_LaboIII.model.dto.ProfesorDto;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/profesor")
@@ -56,6 +57,23 @@ public class ProfesorController {
         try {
             Long DNI = Long.parseLong(dni);
             return profesorService.borrarProfesor(DNI);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("El DNI del profesor debe contener solo números.");
+        }
+    }
+
+    @PutMapping("/{dniprofesor}")
+    public Profesor agregarOEliminarMaterias(@PathVariable String dni,@RequestParam String nombremateria, @RequestParam String accion) {
+        accion = accion.toLowerCase();
+        if (!accion.equals("eliminar") || accion.equals("agregar")) {
+            throw new BadRequestException("La accion solo puede ser eliminar o agregar.");
+        }
+        if (!nombremateria.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$")) {
+            throw new BadRequestException("El nombre de la materia solo puede contener letras y espacios, sin números ni caracteres especiales.");
+        }
+        try {
+            Long DNI = Long.parseLong(dni);
+            return profesorService.agregarOEliminarMateria(DNI, nombremateria,accion);
         } catch (NumberFormatException e) {
             throw new NumberFormatException("El DNI del profesor debe contener solo números.");
         }

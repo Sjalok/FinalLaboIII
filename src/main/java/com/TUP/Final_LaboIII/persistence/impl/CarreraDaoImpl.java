@@ -15,7 +15,6 @@ public class CarreraDaoImpl implements CarreraDao {
 
     @Override
     public Carrera newCarrera(Carrera carrera) {
-        int nuevoId = repositorioCarreras.isEmpty() ? 1 : Collections.max(repositorioCarreras.keySet()) + 1;
         return repositorioCarreras.put(carrera.getCodigoCarrera() ,carrera);
     }
 
@@ -59,10 +58,10 @@ public class CarreraDaoImpl implements CarreraDao {
     public boolean findByName(String nombrecarrera) {
         for (Carrera carrera: repositorioCarreras.values()) {
             if (nombrecarrera.equals(carrera.getNombre())) {
-                return false;
+                return true;
             }
         }
-        return true;
+        throw new NotFoundException("No existe una carrera con ese nombre.");
     }
 
     @Override
