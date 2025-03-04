@@ -9,13 +9,14 @@ import com.TUP.Final_LaboIII.model.dto.ProfesorDto;
 import com.TUP.Final_LaboIII.persistence.ProfesorDao;
 import com.TUP.Final_LaboIII.persistence.exception.YaExistenteException;
 import com.TUP.Final_LaboIII.persistence.impl.ProfesorDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ProfesorServiceImpl implements ProfesorService {
-
+    @Autowired
     private static final ProfesorDao profesorDao = new ProfesorDaoImpl();
     MateriaService materiaService;
     @Override

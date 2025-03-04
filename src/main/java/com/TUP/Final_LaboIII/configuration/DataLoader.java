@@ -216,12 +216,10 @@ public class DataLoader {
         // Crear alumnos
         Alumno alumno1 = new Alumno(1, "Juan", "Pérez", 44556677L, new ArrayList<>(), "INGENIERIA EN SISTEMAS DE INFORMACION");
         Alumno alumno2 = new Alumno(2, "Sol", "González", 22334455L, new ArrayList<>(), "INGENIERIA EN SISTEMAS DE INFORMACION");
-        Alumno alumno3 = new Alumno(3, "Paula", "Larroca", 22334456L, new ArrayList<>(), "ABOGACIA");
+        Alumno alumno3 = new Alumno(3, "Paula", "Larroca", 37555114L, new ArrayList<>(), "ABOGACIA");
         Alumno alumno4 = new Alumno(4, "Paloma", "Alonso", 22334457L, new ArrayList<>(), "ABOGACIA");
         Alumno alumno5 = new Alumno(5, "Eugenia", "Iglesias", 22334458L, new ArrayList<>(), "LICENCIATURA EN CIENCIAS DE LA COMPUTACION");
         Alumno alumno6 = new Alumno(6, "Olivia", "Ugarte", 22334459L, new ArrayList<>(), "LICENCIATURA EN CIENCIAS DE LA COMPUTACION");
-
-        System.out.println("Alumno antes de guardar: " + alumno1.getId() + ", " + alumno1.getNombre() + ", " + alumno1.getDni());
 
         alumnoDao.newAlumno(alumno1);
         alumnoDao.newAlumno(alumno2);

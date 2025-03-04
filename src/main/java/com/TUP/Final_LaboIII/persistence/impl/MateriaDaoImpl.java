@@ -18,7 +18,7 @@ public class MateriaDaoImpl implements MateriaDao {
     @Override
     public Materia loadMateriaNombre(String nombremateria) {
         for (Materia materia: repositorioMaterias.values()) {
-            if (nombremateria == materia.getNombre()) {
+            if (nombremateria.equals(materia.getNombre())) {
                 return materia;
             }
         }

@@ -8,22 +8,19 @@ import com.TUP.Final_LaboIII.model.dto.MateriaDto;
 import com.TUP.Final_LaboIII.persistence.MateriaDao;
 import com.TUP.Final_LaboIII.persistence.exception.YaExistenteException;
 import com.TUP.Final_LaboIII.persistence.impl.MateriaDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class MateriaServiceImpl implements MateriaService {
-
+    @Autowired
     private static final MateriaDao materiaDao = new MateriaDaoImpl();
 
     @Override
     public Materia getMateriaXNombre(String nombremateria) {
         Materia m = materiaDao.loadMateriaNombre(nombremateria);
-
-        if (m == null) {
-            throw new NotFoundException("No existe una materia con ese nombre.");
-        }
 
         return m;
     }

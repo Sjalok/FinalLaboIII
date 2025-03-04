@@ -14,13 +14,14 @@ import com.TUP.Final_LaboIII.model.dto.MateriaDto;
 import com.TUP.Final_LaboIII.persistence.AsignaturaDao;
 import com.TUP.Final_LaboIII.persistence.exception.YaExistenteException;
 import com.TUP.Final_LaboIII.persistence.impl.AsignaturaDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class AsignaturaServiceImpl implements AsignaturaService {
-
+    @Autowired
     private static final AsignaturaDao asignaturaDao = new AsignaturaDaoImpl();
     MateriaService materiaService;
     AlumnoService alumnoService;

@@ -10,6 +10,7 @@ import com.TUP.Final_LaboIII.model.Asignatura;
 import com.TUP.Final_LaboIII.model.dto.AlumnoDto;
 import com.TUP.Final_LaboIII.persistence.AlumnoDao;
 import com.TUP.Final_LaboIII.persistence.impl.AlumnoDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,8 +19,11 @@ import java.util.List;
 
 @Service
 public class AlumnoServiceImpl implements AlumnoService {
+    @Autowired
     private static final AlumnoDao alumnoDao = new AlumnoDaoImpl();
+
     AsignaturaService asignaturaService;
+
     MateriaService materiaService;
     @Override
     public Alumno getAlumnoXId(int idalumno) {

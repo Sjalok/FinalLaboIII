@@ -5,6 +5,7 @@ import com.TUP.Final_LaboIII.business.exception.NumberFormatException;
 import com.TUP.Final_LaboIII.controller.exception.BadRequestException;
 import com.TUP.Final_LaboIII.model.Profesor;
 import com.TUP.Final_LaboIII.model.dto.ProfesorDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
@@ -12,16 +13,16 @@ import java.util.Locale;
 @RestController
 @RequestMapping("/profesor")
 public class ProfesorController {
-
+    @Autowired
     ProfesorService profesorService;
 
     @GetMapping("/{dniprofesor}")
-    public Profesor getProfesor(@PathVariable String dni){
+    public Profesor getProfesor(@PathVariable String dniprofesor){
         try {
-            Long DNI = Long.parseLong(dni);
+            Long DNI = Long.parseLong(dniprofesor);
             return profesorService.getProfesor(DNI);
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("El DNI del profesor debe contener solo números.");
+            throw new java.lang.NumberFormatException();
         }
     }
 

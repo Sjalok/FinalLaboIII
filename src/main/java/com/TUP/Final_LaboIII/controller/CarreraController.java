@@ -5,6 +5,7 @@ import com.TUP.Final_LaboIII.business.exception.NumberFormatException;
 import com.TUP.Final_LaboIII.controller.exception.BadRequestException;
 import com.TUP.Final_LaboIII.model.Carrera;
 import com.TUP.Final_LaboIII.model.dto.CarreraDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequestMapping("/carrera")
 public class CarreraController {
 
+    @Autowired
     private CarreraService carreraService;
 
     @PostMapping
@@ -52,7 +54,7 @@ public class CarreraController {
             int id = Integer.parseInt(codigocarrera);
             return carreraService.getCarrera(id);
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("El ID de la carrera debe contener solo números.");
+            throw new java.lang.NumberFormatException();
         }
     }
 

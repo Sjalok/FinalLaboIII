@@ -9,6 +9,7 @@ import com.TUP.Final_LaboIII.model.dto.CarreraDto;
 import com.TUP.Final_LaboIII.persistence.CarreraDao;
 import com.TUP.Final_LaboIII.persistence.exception.YaExistenteException;
 import com.TUP.Final_LaboIII.persistence.impl.CarreraDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Service
 public class CarreraServiceImpl implements CarreraService {
-
+    @Autowired
     private static final CarreraDao carreraDao = new CarreraDaoImpl();
     MateriaService materiaService;
     @Override
