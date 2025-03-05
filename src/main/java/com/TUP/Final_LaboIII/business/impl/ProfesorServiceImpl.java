@@ -12,12 +12,14 @@ import com.TUP.Final_LaboIII.persistence.impl.ProfesorDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ProfesorServiceImpl implements ProfesorService {
     @Autowired
     private static final ProfesorDao profesorDao = new ProfesorDaoImpl();
+    @Autowired
     MateriaService materiaService;
     @Override
     public Profesor getProfesor(Long dni) {
@@ -31,20 +33,23 @@ public class ProfesorServiceImpl implements ProfesorService {
     }
 
     @Override
-    public Profesor crearProfesor(ProfesorDto profesorDto) {
+    public String crearProfesor(ProfesorDto profesorDto) {
         if (profesorDao.findByDni(profesorDto.getDni())) {
             throw new YaExistenteException("Ya existe un profesor con ese DNI.");
         }
 
         Profesor profesor = new Profesor(profesorDto.getDni(), profesorDto.getNombre(), profesorDto.getApellido(), profesorDto.getTitulo());
 
-        return profesorDao.newProfesor(profesor);
+        profesorDao.newProfesor(profesor);
+
+        return "Se ha creado al profesor correctamente.";
     }
 
     @Override
-    public Profesor borrarProfesor(Long dni) {
+    public String borrarProfesor(Long dni) {
         if (profesorDao.findByDni(dni)) {
             profesorDao.deleteProfesor(dni);
+            return "se ha borrado correctamente el profesor.";
         }
         throw new NotFoundException("No se ha encontrado a un profesor con ese dni.");
     }
@@ -57,7 +62,7 @@ public class ProfesorServiceImpl implements ProfesorService {
         Profesor p = profesorDao.loadProfesor(dni);
         Materia m = materiaService.getMateriaXNombre(nombremateria);
 
-        List<Materia> materias = p.getMateriasDictadas();
+        List<Materia> materias = new ArrayList<>(p.getMateriasDictadas());
 
         if ("agregar".equals(accion)) {
             if (materias.stream().anyMatch(materia -> materia.getNombre().equals(nombremateria))) {
@@ -71,6 +76,8 @@ public class ProfesorServiceImpl implements ProfesorService {
                 throw new NotFoundException("El profesor no dicta la materia: " + nombremateria);
             }
         }
+
+        p.setMateriasDictadas(materias);
 
         return saveProfesor(p);
     }

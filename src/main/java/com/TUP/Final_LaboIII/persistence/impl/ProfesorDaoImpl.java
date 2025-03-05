@@ -34,21 +34,22 @@ public class ProfesorDaoImpl implements ProfesorDao {
     public boolean findByDni(Long dni) {
         for (Profesor profesor: repositorioProfesores.values()) {
             if (dni.equals(profesor.getDni())) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     @Override
     public Profesor deleteProfesor(Long dni) {
-        if (!findByDni(dni)) {
-            throw new NotFoundException("No se encontro al profesor con ese dni");
-        }
-        for (Profesor profesor: repositorioProfesores.values()) {
-            if (dni.equals(profesor.getDni())) {
-                return repositorioProfesores.remove(dni);
-            }
+        Integer keyToRemove = repositorioProfesores.entrySet().stream()
+                .filter(entry -> dni.equals(entry.getValue().getDni())) // Busca por DNI
+                .map(Map.Entry::getKey) // Obtiene la clave del mapa
+                .findFirst()
+                .orElse(null); // Si no encuentra nada, devuelve null
+
+        if (keyToRemove != null) {
+            return repositorioProfesores.remove(keyToRemove); // Elimina usando la clave correcta
         }
         return null;
     }

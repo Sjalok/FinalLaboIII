@@ -20,4 +20,6 @@ public interface AlumnoDao {
     Alumno deleteAlumno(int idalumno);
 
     List<Integer> loadAsignaturasID(int idalumno);
+
+    Integer IDMasAlto();
 }

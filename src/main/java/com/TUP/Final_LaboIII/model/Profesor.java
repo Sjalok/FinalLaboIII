@@ -1,5 +1,6 @@
 package com.TUP.Final_LaboIII.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Profesor {
@@ -7,7 +8,7 @@ public class Profesor {
     private String nombre;
     private String apellido;
     private final String titulo;
-    private List<Materia> materiasDictadas;
+    private List<Materia> materiasDictadas = new ArrayList<>();
 
     public Profesor(Long dni, String nombre, String apellido, String titulo) {
         this.dni = dni;
@@ -58,5 +59,9 @@ public class Profesor {
 
     public void agregarMateria(Materia materia){
         materiasDictadas.add(materia);
+    }
+
+    public void setMateriasDictadas(List<Materia> materiasDictadas) {
+        this.materiasDictadas = materiasDictadas;
     }
 }

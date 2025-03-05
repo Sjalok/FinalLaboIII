@@ -19,7 +19,7 @@ public class CarreraController {
     private CarreraService carreraService;
 
     @PostMapping
-    public Carrera crearCarrera(@RequestBody CarreraDto carreraDto){
+    public String crearCarrera(@RequestBody CarreraDto carreraDto){
         try {
             Integer codigo = Integer.parseInt(String.valueOf(carreraDto.getCodigoCarrera()));
             Integer cuatris = Integer.parseInt(String.valueOf(carreraDto.getCantCuatrimestres()));
@@ -39,6 +39,14 @@ public class CarreraController {
 
             if (departamento < 1) {
                 throw new BadRequestException("El codigo de departamento no puede ser menor a 1.");
+            }
+
+            if (carreraDto.getNombre() == null || carreraDto.getNombre().trim().isEmpty() ||
+                    carreraDto.getDepartamento() <= 0 ||
+                    carreraDto.getCodigoCarrera() <= 0 ||
+                    carreraDto.getCantCuatrimestres() <= 0 || carreraDto.getCantCuatrimestres() > 12) {
+
+                throw new BadRequestException("Todos los campos son obligatorios y deben tener valores válidos.");
             }
 
             return carreraService.crearCarrera(carreraDto);
@@ -62,7 +70,7 @@ public class CarreraController {
     public HashMap<String, List<String>> getTodasCarreras(){return carreraService.getTodasLasCarreras();}
 
     @DeleteMapping("/{codigocarrera}")
-    public Carrera borrarCarrera(@PathVariable String codigocarrera){
+    public String borrarCarrera(@PathVariable String codigocarrera){
         try {
             int codigo = Integer.parseInt(codigocarrera);
             return carreraService.borrarCarrera(codigo);
@@ -74,7 +82,7 @@ public class CarreraController {
     @PutMapping("/{codigocarrera}")
     public Carrera agregarOSacarMateria(@PathVariable String codigocarrera, @RequestParam String nombremateria, @RequestParam String accion) {
         accion = accion.toLowerCase();
-        if (!accion.equals("eliminar") || accion.equals("agregar")) {
+        if (!accion.equals("eliminar") && !accion.equals("agregar")) {
             throw new BadRequestException("La accion solo puede ser eliminar o agregar.");
         }
         if (!nombremateria.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$")) {

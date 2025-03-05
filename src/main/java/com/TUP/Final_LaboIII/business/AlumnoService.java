@@ -12,9 +12,9 @@ public interface AlumnoService {
 
     Alumno getAlumnoXDni(Long dnialumno);
 
-    Alumno crearAlumno(AlumnoDto alumnoDto);
+    String crearAlumno(AlumnoDto alumnoDto);
 
-    Alumno cambiarEstado(int idalumno, String nombreasignatura, String estado);
+    String cambiarEstado(int idalumno, String nombreasignatura, String estado);
 
     Alumno borrarAlumno(int idalumno);
 

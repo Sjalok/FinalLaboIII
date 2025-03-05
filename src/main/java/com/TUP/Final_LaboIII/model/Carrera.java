@@ -1,5 +1,6 @@
 package com.TUP.Final_LaboIII.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Carrera {
@@ -7,7 +8,7 @@ public class Carrera {
     private int codigoCarrera;
     private int departamento;
     private int cantCuatrimestres;
-    private List<Materia> listaMaterias;
+    private List<Materia> listaMaterias = new ArrayList<>();
 
     public Carrera(String nombre, int codigoCarrera, int departamento, int cantCuatrimestres) {
         this.nombre = nombre;

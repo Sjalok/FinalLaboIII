@@ -96,4 +96,18 @@ public class AlumnoDaoImpl implements AlumnoDao {
         Alumno alumno = loadAlumnoId(idalumno);
         return alumno.getAsignaturas();
     }
+
+    @Override
+    public Integer IDMasAlto() {
+        Integer idMasAlto = Integer.MIN_VALUE;
+
+        for (Alumno alumno : repositorioAlumnos.values()) {
+            Integer idActual = alumno.getId();
+            if (idActual > idMasAlto) {
+                idMasAlto = idActual;
+            }
+        }
+
+        return idMasAlto + 1;
+    }
 }

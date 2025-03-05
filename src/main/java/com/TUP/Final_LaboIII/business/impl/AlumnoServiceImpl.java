@@ -2,6 +2,7 @@ package com.TUP.Final_LaboIII.business.impl;
 
 import com.TUP.Final_LaboIII.business.AlumnoService;
 import com.TUP.Final_LaboIII.business.AsignaturaService;
+import com.TUP.Final_LaboIII.business.CarreraService;
 import com.TUP.Final_LaboIII.business.MateriaService;
 import com.TUP.Final_LaboIII.business.exception.CorrelatividadesException;
 import com.TUP.Final_LaboIII.business.exception.NotFoundException;
@@ -21,10 +22,12 @@ import java.util.List;
 public class AlumnoServiceImpl implements AlumnoService {
     @Autowired
     private static final AlumnoDao alumnoDao = new AlumnoDaoImpl();
-
+    @Autowired
     AsignaturaService asignaturaService;
-
+    @Autowired
     MateriaService materiaService;
+    @Autowired
+    CarreraService carreraService;
     @Override
     public Alumno getAlumnoXId(int idalumno) {
         return alumnoDao.loadAlumnoId(idalumno);
@@ -36,26 +39,35 @@ public class AlumnoServiceImpl implements AlumnoService {
     }
 
     @Override
-    public Alumno crearAlumno(AlumnoDto alumnoDto) {
+    public String crearAlumno(AlumnoDto alumnoDto) {
+        if (!carreraService.carreraExist(alumnoDto.getCarrera())) {
+            throw new NotFoundException("No se encontro una carrera con ese nombre.");
+        }
         Alumno alumno = new Alumno();
         alumno.setNombre(alumnoDto.getNombre());
         alumno.setApellido(alumnoDto.getApellido());
         alumno.setDni(alumnoDto.getDni());
         alumno.setCarrera(alumnoDto.getCarrera());
         alumno.setAsignaturas(new ArrayList<>());
+        alumno.setId(alumnoDao.IDMasAlto());
 
-        return alumnoDao.newAlumno(alumno);
+        alumnoDao.newAlumno(alumno);
+
+        return "El alumno se creo correctamente con el ID " + alumno.getId();
     }
 
     @Override
-    public Alumno cambiarEstado(int idalumno, String nombreasignatura, String estado) {
+    public String cambiarEstado(int idalumno, String nombreasignatura, String estado) {
         if (materiaService.getMateriaXNombre(nombreasignatura) == null) {
             throw new NotFoundException("No existe una materia con ese nombre.");
         }
         Alumno a = alumnoDao.loadAlumnoId(idalumno);
-        asignaturaService.checkEstado(idalumno,nombreasignatura,estado);
+        if (!asignaturaService.checkEstado(idalumno,nombreasignatura,estado)) {
+            throw new CorrelatividadesException("No se pueden saltear estados de las asignaturas.");
+        }
+        this.saveAlumno(idalumno, a);
 
-        return this.saveAlumno(idalumno, a);
+        return "Se cambio el estado de la asignatura correctamente";
     }
 
     private Alumno saveAlumno(int id, Alumno alumno) {

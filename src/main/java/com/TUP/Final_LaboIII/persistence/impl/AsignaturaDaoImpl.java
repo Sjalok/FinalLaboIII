@@ -51,10 +51,6 @@ public class AsignaturaDaoImpl  implements AsignaturaDao {
                 .filter(a -> a.getIdAlumno().equals(idalumno))
                 .collect(Collectors.toList());
 
-        if (asignaturas.isEmpty()) {
-            throw new NotFoundException("No se encontraron asignaturas para el alumno ID: " + idalumno);
-        }
-
         return asignaturas;
     }
 

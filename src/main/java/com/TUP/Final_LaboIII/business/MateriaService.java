@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface MateriaService {
     Materia getMateriaXNombre(String nombremateria);
-    Materia crearMateria(MateriaDto materiadto);
+    String crearMateria(MateriaDto materiadto);
     Materia saveCorrelatividadMateria(String nombremateria, String nombrecorrelatividad, String accion);
     Materia saveMateriaNombre(String nombremateria, String nombrematerianuevo);
     Materia deleteMateria(int codigoMateria);

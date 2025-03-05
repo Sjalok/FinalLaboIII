@@ -26,7 +26,6 @@ public class DataLoader {
     public void cargarDatos(){
         System.out.println("Cargando datos iniciales...");
 
-        // Crear materias
         Materia EID = new Materia("EVOLUCION INSTITUCIONAL DEL DERECHO");
         Materia HC = new Materia("HISTORIA CONSTITUCIONAL");
         Materia IAD = new Materia("INTRODUCCION AL DERECHO");
@@ -155,6 +154,7 @@ public class DataLoader {
         Materia APS = new Materia("ADMINISTRACION DE PROYECTOS DE SOFTWARE", List.of(DDS));
         Materia CE = new Materia("COMPILADORES E INTERPRETES", List.of(LDP));
         Materia IA = new Materia("INTELIGENCIA ARTIFICIAL", List.of(LCC));
+        Materia prueba = new Materia("MATERIA DE PRUEBA");
 
         materiaDao.newMateria(MCC);
         materiaDao.newMateria(AYDS);
@@ -164,15 +164,17 @@ public class DataLoader {
         materiaDao.newMateria(APS);
         materiaDao.newMateria(CE);
         materiaDao.newMateria(IA);
+        materiaDao.newMateria(prueba);
 
         Carrera ingenieria = new Carrera("INGENIERIA EN SISTEMAS DE INFORMACION", 181, 1, 10, List.of(AM1, EAG, RPA, IIS, IPOO, LFA, AM2, ED, TC, MS, MECC, OC, TP, AC, LCC, RS, BD, MFIS, quimica, SO, AYC, AS, IAW, fisica1, PSS, VVS, EISS, GCS, RC, ADS, fisica2, SIA) );
         Carrera abogacia = new Carrera("ABOGACIA", 118,2,10, List.of(EID, HC, IAD, DPPG, IAECS, sociologia, TTAIJ,DC,DH,Economia,TDA,TCMR,CP,DO,derechoPenal1,TNMRC,DDLC,derechoPenal2,DPCC,etica,TILAJ,DA,DS,DPP,DEI,TLO));
         Carrera licenciatura = new Carrera("LICENCIATURA EN CIENCIAS DE LA COMPUTACION", 50, 1, 10,List.of(EAG, RPA, AM1, IPOO, LFA, ED, TC, AM2, OC, TP, AYDS, AC, LCC, BD, MCC, MECC,SO,DDS,LDP,RC,APS,CE,IA,AYC,IAW));
+        Carrera medicina = new Carrera("MEDICINA",51,5,10);
         carreraDao.newCarrera(ingenieria);
         carreraDao.newCarrera(abogacia);
         carreraDao.newCarrera(licenciatura);
+        carreraDao.newCarrera(medicina);
 
-        // Crear profesores
         Profesor profesor1 = new Profesor(12345678L, "Carlos", "Gómez", "Abogado", List.of(EID, HC, IAD, IAECS));
         Profesor profesor2 = new Profesor(87654321L, "María", "Pérez", "Abogado", List.of(sociologia, TTAIJ, DC, DH));
         Profesor profesor3 = new Profesor(1115353L, "Pablo", "Di Geronimo", "Abogado",List.of(Economia,TDA,TCMR,CP));
@@ -199,6 +201,7 @@ public class DataLoader {
         Profesor profesor16 = new Profesor(5636167861L, "Laura", "Cobo", "Doctor", List.of(RC));
         Profesor profesor17 = new Profesor(5646167861L, "Karina", "Cenci", "Magister", List.of(ADS,SIA));
         Profesor profesor18 = new Profesor(5656167861L, "Pablo", "Fillottrani", "Doctor", List.of(LDP,APS,CE,IA));
+        Profesor profesor19 = new Profesor(123412452L,"Marcos","Palavecino","Magister");
 
         profesorDao.newProfesor(profesor7);
         profesorDao.newProfesor(profesor8);
@@ -212,14 +215,15 @@ public class DataLoader {
         profesorDao.newProfesor(profesor16);
         profesorDao.newProfesor(profesor17);
         profesorDao.newProfesor(profesor18);
+        profesorDao.newProfesor(profesor19);
 
-        // Crear alumnos
         Alumno alumno1 = new Alumno(1, "Juan", "Pérez", 44556677L, new ArrayList<>(), "INGENIERIA EN SISTEMAS DE INFORMACION");
         Alumno alumno2 = new Alumno(2, "Sol", "González", 22334455L, new ArrayList<>(), "INGENIERIA EN SISTEMAS DE INFORMACION");
         Alumno alumno3 = new Alumno(3, "Paula", "Larroca", 37555114L, new ArrayList<>(), "ABOGACIA");
         Alumno alumno4 = new Alumno(4, "Paloma", "Alonso", 22334457L, new ArrayList<>(), "ABOGACIA");
         Alumno alumno5 = new Alumno(5, "Eugenia", "Iglesias", 22334458L, new ArrayList<>(), "LICENCIATURA EN CIENCIAS DE LA COMPUTACION");
         Alumno alumno6 = new Alumno(6, "Olivia", "Ugarte", 22334459L, new ArrayList<>(), "LICENCIATURA EN CIENCIAS DE LA COMPUTACION");
+        Alumno alumno7 = new Alumno(7,"Mascarpone","Queso",40231863L,new ArrayList<>(),"ABOGACIA");
 
         alumnoDao.newAlumno(alumno1);
         alumnoDao.newAlumno(alumno2);
@@ -227,6 +231,7 @@ public class DataLoader {
         alumnoDao.newAlumno(alumno4);
         alumnoDao.newAlumno(alumno5);
         alumnoDao.newAlumno(alumno6);
+        alumnoDao.newAlumno(alumno7);
 
         System.out.println("Datos cargados.");
     }

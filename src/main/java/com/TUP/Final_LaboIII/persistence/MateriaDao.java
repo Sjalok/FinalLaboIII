@@ -10,6 +10,7 @@ public interface MateriaDao {
     Materia newMateria(Materia materia);
     boolean findByCode(int codigomateria);
     Materia saveMateria(Materia materia);
+    Materia cambiarNombreMateria(Materia materia, String nombrematerianuevo);
     Materia deleteMateria(int codigomateria);
     Map<Integer,Materia> getTodasLasMaterias();
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Materia {
     private String nombre;
-    private List<Materia> correlatividades;
+    private List<Materia> correlatividades = new ArrayList<>();
 
     public Materia() {
     }

@@ -4,11 +4,13 @@ import com.TUP.Final_LaboIII.business.AlumnoService;
 import com.TUP.Final_LaboIII.business.exception.NumberFormatException;
 import com.TUP.Final_LaboIII.controller.exception.BadRequestException;
 import com.TUP.Final_LaboIII.model.Alumno;
+import com.TUP.Final_LaboIII.model.Asignatura;
 import com.TUP.Final_LaboIII.model.dto.AlumnoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/alumno")
@@ -37,7 +39,7 @@ public class AlumnoController {
     }
 
     @PostMapping
-    public Alumno crearAlumno(@RequestBody AlumnoDto alumnoDto) {
+    public String crearAlumno(@RequestBody AlumnoDto alumnoDto) {
         try {
             Long dni = Long.parseLong(alumnoDto.getDni().toString());
 
@@ -64,19 +66,21 @@ public class AlumnoController {
     }
 
     @PutMapping("/{idalumno}/asignatura/{nombreasignatura}")
-    public Alumno cambiarEstado(@PathVariable String idalumno, @PathVariable String nombreasignatura, @RequestParam String estado) {
+    public String cambiarEstado(@PathVariable String idalumno, @PathVariable String nombreasignatura, @RequestParam String estado) {
         try {
             int id = Integer.parseInt(idalumno);
 
-            if (!nombreasignatura.matches("^[a-zA-Z0-9]+$")) {
-                throw new BadRequestException("El nombre de la asignatura no debe contener caracteres especiales.");
+            System.out.println("Valor de 'estado': '" + estado + "'");
+
+            if (estado == null || estado.trim().isEmpty()) {
+                throw new BadRequestException("El parámetro 'estado' es obligatorio.");
             }
 
-            if (!estado.matches("^[a-zA-Z0-9]+$")) {
-                throw new BadRequestException("El nombre de la asignatura no debe contener caracteres especiales.");
+            if (!nombreasignatura.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$")) {
+                throw new BadRequestException("El nombre de la asignatura no debe contener caracteres especiales ni números.");
             }
 
-            if (estado != "cursada" && estado != "perdida" && estado != "aprobada") {
+            if (!estado.equalsIgnoreCase("cursada") && !estado.equalsIgnoreCase("perdida") && !estado.equalsIgnoreCase("aprobada")) {
                 throw new BadRequestException("El estado no puede ser distinto a cursada, perdida o aprobada.");
             }
 
@@ -101,7 +105,7 @@ public class AlumnoController {
         try {
             int id = Integer.parseInt(idalumno);
 
-            if (!nombreasignatura.matches("^[a-zA-Z0-9]+$")) {
+            if (!nombreasignatura.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$")) {
                 throw new BadRequestException("El nombre de la asignatura no debe contener caracteres especiales.");
             }
 
@@ -112,10 +116,10 @@ public class AlumnoController {
     }
 
     @GetMapping("/{idalumno}/materias")
-    public HashMap<String, String> verTodasLasMaterias(@PathVariable String idalumno) {
+    public List<Asignatura> verTodasLasMaterias(@PathVariable String idalumno) {
         try {
             int id = Integer.parseInt(idalumno);
-            return (HashMap<String, String>) alumnoService.getTodasMaterias(id);
+            return alumnoService.getTodasMaterias(id);
         } catch (NumberFormatException e) {
             throw new NumberFormatException("El ID del alumno debe contener solo números.");
         }

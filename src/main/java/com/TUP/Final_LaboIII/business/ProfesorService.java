@@ -6,9 +6,9 @@ import com.TUP.Final_LaboIII.model.dto.ProfesorDto;
 public interface ProfesorService {
     Profesor getProfesor(Long dni);
 
-    Profesor crearProfesor(ProfesorDto profesorDto);
+    String crearProfesor(ProfesorDto profesorDto);
 
-    Profesor borrarProfesor(Long dni);
+    String borrarProfesor(Long dni);
 
     Profesor agregarOEliminarMateria(Long dni, String nombremateria, String accion);
 }

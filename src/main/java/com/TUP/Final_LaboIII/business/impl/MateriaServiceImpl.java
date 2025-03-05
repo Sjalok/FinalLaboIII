@@ -26,12 +26,13 @@ public class MateriaServiceImpl implements MateriaService {
     }
 
     @Override
-    public Materia crearMateria(MateriaDto materiadto) {
+    public String crearMateria(MateriaDto materiadto) {
         if (existeMateria(materiadto.getNombre())) {
             throw new YaExistenteException("Ya existe una materia con ese nombre.");
         } else {
             Materia m = new Materia(materiadto.getNombre());
-            return materiaDao.newMateria(m);
+            materiaDao.newMateria(m);
+            return "Se ha creado la materia correctamente.";
         }
     }
 
@@ -47,7 +48,7 @@ public class MateriaServiceImpl implements MateriaService {
         Materia materia = getMateriaXNombre(nombremateria);
         Materia correlativa = getMateriaXNombre(nombrecorrelatividad);
 
-        List<Materia> correlativas = materia.getCorrelatividades();
+        List<Materia> correlativas = new ArrayList<>(materia.getCorrelatividades());
 
         if ("agregar".equals(accion)) {
             if (correlativas.stream().anyMatch(m -> m.getNombre().equalsIgnoreCase(nombrecorrelatividad))) {
@@ -61,23 +62,20 @@ public class MateriaServiceImpl implements MateriaService {
             }
         }
 
+        materia.setCorrelatividades(correlativas);
+
         return materiaDao.saveMateria(materia);
     }
 
     @Override
     public Materia saveMateriaNombre(String nombremateria, String nombrematerianuevo) {
-        if (!existeMateria(nombremateria)) {
-            throw new NotFoundException("No existe una materia con el nombre: " + nombremateria);
-        }
+        Materia materia = getMateriaXNombre(nombremateria);
+
         if (existeMateria(nombrematerianuevo)) {
             throw new YaExistenteException("Ya existe una materia con el nombre: " + nombrematerianuevo);
         }
 
-        Materia materia = getMateriaXNombre(nombremateria);
-
-        materia.setNombre(nombrematerianuevo);
-
-        return materiaDao.saveMateria(materia);
+        return materiaDao.cambiarNombreMateria(materia, nombrematerianuevo);
     }
 
     @Override
@@ -135,11 +133,8 @@ public class MateriaServiceImpl implements MateriaService {
 
     @Override
     public boolean existeMateria(String nombremateria) {
-        Materia m = materiaDao.loadMateriaNombre(nombremateria);
-        if (m == null) {
-            return false;
-        }
-        return true;
+        return materiaDao.getTodasLasMaterias().values().stream()
+                .anyMatch(m -> m.getNombre().equals(nombremateria));
     }
 
     /** @Override

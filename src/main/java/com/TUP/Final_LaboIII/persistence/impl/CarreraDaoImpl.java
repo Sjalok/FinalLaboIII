@@ -57,11 +57,11 @@ public class CarreraDaoImpl implements CarreraDao {
     @Override
     public boolean findByName(String nombrecarrera) {
         for (Carrera carrera: repositorioCarreras.values()) {
-            if (nombrecarrera.equals(carrera.getNombre())) {
+            if (nombrecarrera.equalsIgnoreCase(carrera.getNombre())) {
                 return true;
             }
         }
-        throw new NotFoundException("No existe una carrera con ese nombre.");
+        return false;
     }
 
     @Override
@@ -69,8 +69,8 @@ public class CarreraDaoImpl implements CarreraDao {
         HashMap<String, List<String>> todasLasCarreras = new HashMap<>();
         List<String> carreras = new ArrayList<>();
 
-        for (Carrera carrera: repositorioCarreras.values()) {
-            carreras.add(carrera.getNombre());
+        for (Carrera carrera : repositorioCarreras.values()) {
+            carreras.add(carrera.getCodigoCarrera() + " - " + carrera.getNombre());
         }
 
         todasLasCarreras.put("Carreras:", carreras);

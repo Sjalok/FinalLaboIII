@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @RestController
@@ -36,15 +37,16 @@ public class MateriaController {
     }
 
     @PostMapping
-    public Materia crearMateria(@RequestBody MateriaDto materiadto){
+    public String crearMateria(@RequestBody MateriaDto materiadto){
         if (!materiadto.getNombre().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$")) {
             throw new BadRequestException("El nombre de la materia solo puede contener letras y espacios, sin números ni caracteres especiales.");
         }
         return materiaService.crearMateria(materiadto);
     }
 
-    @PutMapping("/{nombremateria}/correlatividad")
+    @PutMapping("/{nombremateria}/correlativas")
     public Materia modificarCorrelatividadMateria(@PathVariable String nombremateria, @RequestParam String correlatividad, @RequestParam String accion){
+        accion = accion.toLowerCase();
         if (!accion.equals("agregar") && !accion.equals("eliminar")) {
             throw new BadRequestException("La accion solo puede ser agregar o eliminar.");
         }
@@ -56,8 +58,8 @@ public class MateriaController {
         return materiaService.saveCorrelatividadMateria(nombremateria, correlatividad, accion);
     }
 
-    @PutMapping("/{nombremateria}/nombre")
-    public Materia modificarNombreMateria(@PathVariable String nombremateria, @RequestParam String nuevonombre) {
+    @PutMapping("/{nombremateria}/{nuevonombre}")
+    public Materia modificarNombreMateria(@PathVariable String nombremateria, @PathVariable String nuevonombre) {
         if (!nombremateria.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$") || !nuevonombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\sIVXLCDM]+$")) {
             throw new BadRequestException("El nombre de la materia o la nueva materia solo puede contener letras y espacios, sin números ni caracteres especiales.");
         }
@@ -65,9 +67,9 @@ public class MateriaController {
     }
 
     @DeleteMapping("/{idmateria}")
-    public Materia borrarMateria(@PathVariable String codigoMateria){
+    public Materia borrarMateria(@PathVariable String idmateria){
         try {
-            int id = Integer.parseInt(codigoMateria);
+            int id = Integer.parseInt(idmateria);
             return materiaService.deleteMateria(id);
         } catch (NumberFormatException e) {
             throw new NumberFormatException("El ID de la materia debe contener solo números.");

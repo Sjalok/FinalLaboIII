@@ -12,6 +12,7 @@ import com.TUP.Final_LaboIII.persistence.impl.CarreraDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,11 +20,16 @@ import java.util.List;
 public class CarreraServiceImpl implements CarreraService {
     @Autowired
     private static final CarreraDao carreraDao = new CarreraDaoImpl();
+    @Autowired
     MateriaService materiaService;
     @Override
-    public Carrera crearCarrera(CarreraDto carreraDto) {
+    public String crearCarrera(CarreraDto carreraDto) {
         Carrera carrera = new Carrera(carreraDto.getNombre(), carreraDto.getCodigoCarrera(), carreraDto.getDepartamento(), carreraDto.getCantCuatrimestres());
-        return carreraDao.newCarrera(carrera);
+        if (carreraDao.findByName(carrera.getNombre())) {
+            throw new YaExistenteException("Ya existe una carrera con ese nombre.");
+        }
+        carreraDao.newCarrera(carrera);
+        return "Se ha creado la carrera correctamente.";
     }
 
     @Override
@@ -48,9 +54,10 @@ public class CarreraServiceImpl implements CarreraService {
     }
 
     @Override
-    public Carrera borrarCarrera(int codigocarrera) {
+    public String borrarCarrera(int codigocarrera) {
         if (carreraDao.findByCode(codigocarrera)) {
-            return carreraDao.deleteCarrera(codigocarrera);
+            carreraDao.deleteCarrera(codigocarrera);
+            return "Se ha borrado la carrera correctamente.";
         }
         throw new NotFoundException("No existe una carrera con ese codigo.");
     }
@@ -63,21 +70,29 @@ public class CarreraServiceImpl implements CarreraService {
         Carrera carrera = carreraDao.loadCarrera(codigocarrera);
         Materia m = materiaService.getMateriaXNombre(nombremateria);
 
-        List<Materia> materias = carrera.getListaMaterias();
+        List<Materia> materias = new ArrayList<>(carrera.getListaMaterias());
 
-        if ("agregar".equals(accion)) {
+        if ("agregar".equalsIgnoreCase(accion)) {
             if (materias.stream().anyMatch(materia -> materia.getNombre().equals(nombremateria))) {
                 throw new YaExistenteException("La carrera ya tiene la materia: " + nombremateria);
             }
             materias.add(m);
+            System.out.println(materias);
         }
-        else if ("eliminar".equals(accion)) {
+        else if ("eliminar".equalsIgnoreCase(accion)) {
             if (materias.removeIf(materia -> materia.getNombre().equals(nombremateria))) {
             } else {
                 throw new NotFoundException("La carrera no tiene la carrera: " + nombremateria);
             }
         }
 
+        carrera.setListaMaterias(materias);
+
         return saveCarrera(carrera);
+    }
+
+    @Override
+    public boolean carreraExist(String nombrecarrera) {
+        return carreraDao.findByName(nombrecarrera);
     }
 }

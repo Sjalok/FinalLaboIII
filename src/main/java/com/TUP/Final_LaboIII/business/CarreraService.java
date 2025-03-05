@@ -7,13 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface CarreraService {
-    Carrera crearCarrera(CarreraDto carreraDto);
+    String crearCarrera(CarreraDto carreraDto);
 
     Carrera getCarrera(int codigocarrera);
 
     HashMap<String, List<String>> getTodasLasCarreras();
 
-    Carrera borrarCarrera(int codigocarrera);
+    String borrarCarrera(int codigocarrera);
 
     Carrera agregarOEliminarMaterias(int codigocarrera, String nombremateria, String accion);
+
+    boolean carreraExist(String nombrecarrera);
 }

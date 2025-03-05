@@ -7,6 +7,7 @@ import com.TUP.Final_LaboIII.model.dto.MateriaDto;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface AsignaturaService {
     Alumno nuevaAsignatura(Alumno alumno, String nombremateria);
@@ -15,4 +16,5 @@ public interface AsignaturaService {
     boolean checkEstado(Integer idalumno, String nombremateria, String estado);
     boolean tieneMateria(Integer idalumno, String nombreasignatura);
     List<Asignatura> listaMaterias(Integer idalumno);
+    Map<Integer,Asignatura> todasLasAsignaturas();
 }

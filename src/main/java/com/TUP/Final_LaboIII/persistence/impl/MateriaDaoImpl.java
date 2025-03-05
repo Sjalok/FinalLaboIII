@@ -15,14 +15,13 @@ public class MateriaDaoImpl implements MateriaDao {
 
     private static Map<Integer, Materia> repositorioMaterias = new HashMap<>();
 
-    @Override
     public Materia loadMateriaNombre(String nombremateria) {
-        for (Materia materia: repositorioMaterias.values()) {
-            if (nombremateria.equals(materia.getNombre())) {
+        for (Materia materia : repositorioMaterias.values()) {
+            if (nombremateria.trim().equalsIgnoreCase(materia.getNombre().trim())) {
                 return materia;
             }
         }
-        throw new NotFoundException("No se encontro una materia llamada " + nombremateria);
+        throw new NotFoundException("No se encontró una materia llamada " + nombremateria);
     }
 
     public Materia newMateria(Materia materia) {
@@ -42,6 +41,21 @@ public class MateriaDaoImpl implements MateriaDao {
                 .map(Map.Entry::getKey)
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("No se encontro una materia con el nombre: " + materia.getNombre()));
+
+        repositorioMaterias.put(idMateria, materia);
+
+        return materia;
+    }
+
+    @Override
+    public Materia cambiarNombreMateria(Materia materia, String nombrematerianuevo) {
+        Integer idMateria = repositorioMaterias.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(materia))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("No se encontró la materia especificada"));
+
+        materia.setNombre(nombrematerianuevo);
 
         repositorioMaterias.put(idMateria, materia);
 

@@ -15,15 +15,21 @@ import com.TUP.Final_LaboIII.persistence.AsignaturaDao;
 import com.TUP.Final_LaboIII.persistence.exception.YaExistenteException;
 import com.TUP.Final_LaboIII.persistence.impl.AsignaturaDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class AsignaturaServiceImpl implements AsignaturaService {
     @Autowired
     private static final AsignaturaDao asignaturaDao = new AsignaturaDaoImpl();
+    @Autowired
     MateriaService materiaService;
+    @Autowired
+    @Lazy
     AlumnoService alumnoService;
 
     EstadoAsignatura EstadoAsignatura;
@@ -32,9 +38,6 @@ public class AsignaturaServiceImpl implements AsignaturaService {
     public Alumno nuevaAsignatura(Alumno alumno, String nombremateria) {
         if (!materiaService.existeMateria(nombremateria)) {
             throw new NotFoundException("No existe una materia con ese nombre.");
-        }
-        if (alumnoService.getAlumnoXId(alumno.getId()) == null) {
-            throw new NotFoundException("No existe un alumno con ese id.");
         }
 
         if (!esMateriaPerdida(alumno.getId(), nombremateria)) {
@@ -158,7 +161,8 @@ public class AsignaturaServiceImpl implements AsignaturaService {
         return true;
     }
 
-    private Map<Integer,Asignatura> todasLasAsignaturas() {
+    @Override
+    public Map<Integer,Asignatura> todasLasAsignaturas() {
         return asignaturaDao.getTodasAsignaturas();
     }
 }
