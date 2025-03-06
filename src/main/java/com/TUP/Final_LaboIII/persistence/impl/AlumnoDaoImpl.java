@@ -99,6 +99,10 @@ public class AlumnoDaoImpl implements AlumnoDao {
 
     @Override
     public Integer IDMasAlto() {
+        if (repositorioAlumnos.isEmpty()) {
+            return 0;
+        }
+
         Integer idMasAlto = Integer.MIN_VALUE;
 
         for (Alumno alumno : repositorioAlumnos.values()) {

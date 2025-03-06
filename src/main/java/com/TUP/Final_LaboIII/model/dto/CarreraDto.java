@@ -6,6 +6,13 @@ public class CarreraDto {
     private int codigoCarrera;
     private int cantCuatrimestres;
 
+    public CarreraDto(String nombre, int departamento, int codigoCarrera, int cantCuatrimestres) {
+        this.nombre = nombre;
+        this.departamento = departamento;
+        this.codigoCarrera = codigoCarrera;
+        this.cantCuatrimestres = cantCuatrimestres;
+    }
+
     public String getNombre() {
         return nombre;
     }

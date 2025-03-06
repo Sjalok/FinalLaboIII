@@ -6,6 +6,13 @@ public class AlumnoDto {
     private Long dni;
     private String carrera;
 
+    public AlumnoDto(String nombre, String apellido, Long dni, String carrera) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.carrera = carrera;
+    }
+
     public String getNombre() {
         return nombre;
     }

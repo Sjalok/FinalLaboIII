@@ -233,6 +233,14 @@ public class DataLoader {
         alumnoDao.newAlumno(alumno6);
         alumnoDao.newAlumno(alumno7);
 
+        Asignatura asignatura1 = new Asignatura(MS,EstadoAsignatura.CURSADA,0,6);
+        Asignatura asignatura2 = new Asignatura(TP,EstadoAsignatura.CURSADA,0,6);
+        Asignatura asignatura3 = new Asignatura(ED,EstadoAsignatura.PERDIDA,0,6);
+
+        asignaturaDao.newAsignatura(asignatura1);
+        asignaturaDao.newAsignatura(asignatura2);
+        asignaturaDao.newAsignatura(asignatura3);
+
         System.out.println("Datos cargados.");
     }
 }
