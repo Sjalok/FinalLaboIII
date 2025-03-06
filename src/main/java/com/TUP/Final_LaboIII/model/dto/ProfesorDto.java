@@ -6,6 +6,13 @@ public class ProfesorDto {
     private Long dni;
     private String titulo;
 
+    public ProfesorDto(String nombre, String apellido, Long dni, String titulo) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.titulo = titulo;
+    }
+
     public String getNombre() {
         return nombre;
     }

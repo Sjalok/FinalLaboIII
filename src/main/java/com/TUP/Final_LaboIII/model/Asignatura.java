@@ -9,7 +9,11 @@ public class Asignatura {
     public Asignatura() {
     }
 
-    public Asignatura(Materia materia, EstadoAsignatura estado, int nota, int idalumno) {
+    public Asignatura(Materia materia, EstadoAsignatura estado, Integer nota, Integer idAlumno) {
+        this.materia = materia;
+        this.estado = estado;
+        this.nota = nota;
+        this.idAlumno = idAlumno;
     }
 
     public Materia getMateria() {

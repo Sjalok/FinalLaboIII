@@ -50,6 +50,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El dato ingresado solo puede contener numeros.");
     }
 
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<String> handleNumberFormatException(NumberFormatException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
     @ExceptionHandler({CorrelatividadesException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<String> handleCorrelatividadesException(CorrelatividadesException ex) {

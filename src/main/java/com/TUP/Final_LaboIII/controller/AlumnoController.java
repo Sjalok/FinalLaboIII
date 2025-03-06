@@ -95,8 +95,8 @@ public class AlumnoController {
         try {
             int id = Integer.parseInt(idalumno);
             return alumnoService.borrarAlumno(id);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException("El ID del alumno debe contener solo números.");
+        } catch (java.lang.NumberFormatException e) {
+            throw new java.lang.NumberFormatException("El ID del alumno debe contener solo números.");
         }
     }
 

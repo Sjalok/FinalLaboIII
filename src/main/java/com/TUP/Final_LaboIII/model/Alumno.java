@@ -23,6 +23,14 @@ public class Alumno {
         this.carrera = carrera;
     }
 
+    public Alumno(int id, String nombre, String apellido, long dni, String carrera) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.carrera = carrera;
+    }
+
     public int getId() {
         return id;
     }
